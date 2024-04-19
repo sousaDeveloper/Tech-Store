@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Sora } from "next/font/google";
 import "./globals.css";
+import Header from "./_components/Header/Header";
 
 const sora = Sora({
   weight: "400",
@@ -18,7 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={sora.className}>{children}</body>
+      <body className={sora.className}>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }
