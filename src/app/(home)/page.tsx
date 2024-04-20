@@ -1,13 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { HeadphonesIcon, KeyboardIcon, MouseIcon } from "lucide-react";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Categories from "./components/categories";
 
 export default function Home() {
-  const { data } = useSession();
-
   return (
     <main className="p-5">
       <Image
@@ -18,6 +14,9 @@ export default function Home() {
         sizes="100vw"
         className="h-auto w-full"
       />
+      <div className="mt-8">
+        <Categories />
+      </div>
     </main>
   );
 }
