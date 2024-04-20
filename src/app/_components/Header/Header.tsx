@@ -33,7 +33,7 @@ export default function Header() {
   };
 
   return (
-    <header className="flex justify-between items-center py-5 px-6 border-b border-solid">
+    <header className="flex items-center justify-between border-b border-solid px-6 py-5">
       <Sheet>
         <SheetTrigger asChild>
           <Button size="icon" variant="outline">
@@ -41,7 +41,7 @@ export default function Header() {
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="p-0 pt-[1.3rem]">
-          <SheetHeader className="pl-3 pb-3 border-b w-full">
+          <SheetHeader className="w-full border-b pb-3 pl-3">
             <SheetTitle>Menu</SheetTitle>
           </SheetHeader>
 
@@ -61,7 +61,7 @@ export default function Header() {
             </div>
           )}
 
-          <div className="flex flex-col gap-2 mt-5 mx-2">
+          <div className="mx-2 mt-5 flex flex-col gap-2">
             {status === "unauthenticated" && (
               <ButtonMenu onClick={handleLoginClick}>
                 <LogInIcon size={16} /> Fazer Login
@@ -92,7 +92,7 @@ export default function Header() {
         </SheetContent>
       </Sheet>
 
-      <h1 className="font-semibold text-xl bg-gradient-to-r from-purple-600 to-purple-300 bg-clip-text text-transparent">
+      <h1 className="bg-gradient-to-r from-purple-600 to-purple-300 bg-clip-text text-xl font-semibold text-transparent">
         Tech Store
       </h1>
 
