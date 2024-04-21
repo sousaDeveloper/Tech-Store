@@ -56,9 +56,7 @@ export default function ProductItem({ product }: ProductItemProps) {
               </p>
             </>
           ) : (
-            <p className="text-xs font-semibold">
-              R${+product.basePrice.toFixed(2)}
-            </p>
+            <p className="text-sm font-semibold">R${+product.basePrice},00</p>
           )}
         </div>
         <div className="flex items-center gap-1">

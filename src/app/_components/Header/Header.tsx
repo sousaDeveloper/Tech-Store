@@ -92,7 +92,7 @@ export default function Header() {
         </SheetContent>
       </Sheet>
 
-      <h1 className="bg-gradient-to-r from-purple-600 to-purple-300 bg-clip-text text-xl font-semibold text-transparent">
+      <h1 className="bg-gradient-to-r from-[#5033C3] to-purple-600 bg-clip-text text-xl font-semibold text-transparent">
         Tech Store
       </h1>
 
