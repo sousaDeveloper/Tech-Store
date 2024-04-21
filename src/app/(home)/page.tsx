@@ -15,26 +15,37 @@ export default async function Home() {
   });
 
   return (
-    <main className="p-5">
-      <Image
-        src="/banner-home-01.png"
-        width={0}
-        height={0}
-        alt="Até 55% de desconto esse mês!"
-        sizes="100vw"
-        className="h-auto w-full"
-      />
+    <>
+      <main className="p-5">
+        <Image
+          src="/banner-home-01.png"
+          width={0}
+          height={0}
+          alt="Até 55% de desconto esse mês!"
+          sizes="100vw"
+          className="h-auto w-full"
+        />
 
-      <div className="mt-8">
-        <Categories />
-      </div>
+        <div className="mt-8">
+          <Categories />
+        </div>
+      </main>
 
-      <div className="mt-8">
-        <p className="my-2">OFERTAS</p>
+      <div className="p-5">
+        <p className="mb-2">OFERTAS</p>
         <ProductList products={deals} />
       </div>
 
-     
-    </main>
+      <Image
+        src="/banner-home-02.png"
+        width={0}
+        height={0}
+        alt="Até 55% de desconto em mouses!"
+        sizes="100vw"
+        className="mt-5 h-auto w-full"
+      />
+
+      
+    </>
   );
 }
