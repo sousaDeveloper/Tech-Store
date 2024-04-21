@@ -1,11 +1,8 @@
-import Image from "next/image";
-
 import { prismaClient } from "@/lib/prisma";
 
 import Categories from "./components/categories";
 import ProductList from "./components/product-list";
 import BannerHome from "./components/banner-home";
-import Footer from "./components/footer";
 
 export default async function Home() {
   const deals = await prismaClient.product.findMany({
@@ -45,7 +42,7 @@ export default async function Home() {
         </div>
       </main>
 
-      <div className="p-5">
+      <div className="p-5 pt-2">
         <p className="mb-1">OFERTAS</p>
         <ProductList products={deals} />
       </div>
@@ -69,8 +66,6 @@ export default async function Home() {
         <p className="mb-1">MOUSES</p>
         <ProductList products={mouses} />
       </div>
-
-      <Footer />
     </>
   );
 }
