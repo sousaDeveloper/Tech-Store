@@ -1,4 +1,8 @@
 "use client";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+import { signIn, signOut, useSession } from "next-auth/react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -17,11 +21,8 @@ import {
   PercentIcon,
   ShoppingCartIcon,
 } from "lucide-react";
-import ButtonMenu from "./ButtonMenu/ButtonMenu";
-import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import ButtonMenu from "./ButtonMenu/ButtonMenu";
 
 export default function Header() {
   const router = useRouter();
@@ -46,7 +47,13 @@ export default function Header() {
   };
 
   return (
-    <header className="flex items-center justify-between border-b border-solid px-6 py-5">
+    <header
+      className="fixed top-0 z-50 flex w-full items-center justify-between border-b border-solid px-6 py-5"
+      style={{
+        backdropFilter: "blur(0.5rem)",
+        WebkitBackdropFilter: "blur(0.5rem)",
+      }}
+    >
       <Sheet>
         <SheetTrigger asChild>
           <Button size="icon" variant="outline">
