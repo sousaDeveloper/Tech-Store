@@ -15,7 +15,7 @@ export default function ButtonBack() {
       onClick={handleRouterBackClick}
       variant="outline"
       size="icon"
-      className="ml-1 border-primary"
+      className="ml-1 border-collapse"
     >
       <ChevronLeftIcon />
     </Button>
