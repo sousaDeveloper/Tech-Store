@@ -1,12 +1,8 @@
-import {
-  HeadphonesIcon,
-  KeyboardIcon,
-  MonitorIcon,
-  MouseIcon,
-  SpeakerIcon,
-  SquareIcon,
-} from "lucide-react";
+"use client";
 
+import { useRouter } from "next/navigation";
+
+import { CATEGORY_ICON } from "@/constants/category-icon";
 import { Category } from "@prisma/client";
 
 import { Button } from "@/components/ui/button";
@@ -16,19 +12,18 @@ interface CategoryItemProps {
 }
 
 export default function CategoryItem({ category }: CategoryItemProps) {
-  const categoryIcon = {
-    keyboards: <KeyboardIcon size={18} />,
-    monitors: <MonitorIcon size={18} />,
-    headphones: <HeadphonesIcon size={18} />,
-    mousepads: <SquareIcon size={18} />,
-    speakers: <SpeakerIcon size={18} />,
-    mouses: <MouseIcon size={18} />,
-  };
+  const router = useRouter();
+
+  const handleRouterClick = (path: string) => router.push(path);
 
   return (
     <>
-      <Button variant="outline" className="flex w-[167px] gap-2">
-        {categoryIcon[category.slug as keyof typeof categoryIcon]}
+      <Button
+        variant="outline"
+        className="flex w-[167px] gap-2"
+        onClick={() => handleRouterClick(`/catalog/category/${category.slug}`)}
+      >
+        {CATEGORY_ICON[category.slug as keyof typeof CATEGORY_ICON]}
         <span>{category.name}</span>
       </Button>
     </>

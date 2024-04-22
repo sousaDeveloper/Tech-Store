@@ -5,11 +5,12 @@ import ProductItem from "@/app/_components/ProductItem/product-item";
 
 interface ProductListProps {
   products: Product[];
+  className: string;
 }
 
-export default function ProductList({ products }: ProductListProps) {
+export default function ProductList({ products, className }: ProductListProps) {
   return (
-    <div className="flex w-full gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+    <div className={className}>
       {products.map((product) => (
         <ProductItem
           product={computeProductTotalPrice(product)}

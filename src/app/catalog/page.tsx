@@ -9,7 +9,7 @@ export default async function CatalogPage() {
   const categories = await prismaClient.category.findMany({});
 
   return (
-    <div className="p-5">
+    <div className="mt-20 p-5">
       <Badge
         className="flex w-[7rem] gap-1 border-primary uppercase"
         variant="outline"

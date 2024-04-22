@@ -31,7 +31,7 @@ export default async function Home() {
 
   return (
     <>
-      <main className="p-5">
+      <main className="p-5 mt-14">
         <BannerHome
           src="/banner-home-01.png"
           alt="Até 55% de desconto só esse mês!"
@@ -44,7 +44,10 @@ export default async function Home() {
 
       <div className="p-5 pt-2">
         <p className="mb-1">OFERTAS</p>
-        <ProductList products={deals} />
+        <ProductList
+          products={deals}
+          className="flex w-full gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden"
+        />
       </div>
 
       <BannerHome
@@ -54,7 +57,10 @@ export default async function Home() {
 
       <div className="mt-3 p-5">
         <p className="mb-1">TECLADOS</p>
-        <ProductList products={keyboards} />
+        <ProductList
+          products={keyboards}
+          className="flex w-full gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden"
+        />
       </div>
 
       <BannerHome
@@ -64,7 +70,10 @@ export default async function Home() {
 
       <div className="mt-3 p-5">
         <p className="mb-1">MOUSES</p>
-        <ProductList products={mouses} />
+        <ProductList
+          products={mouses}
+          className="flex w-full gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden"
+        />
       </div>
     </>
   );

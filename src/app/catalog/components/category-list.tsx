@@ -19,7 +19,7 @@ export default function CategoryList({ category }: CategoryListProps) {
   return (
     <div
       className="flex min-w-[140px] cursor-pointer flex-col transition-all duration-300 hover:-translate-y-1"
-      onClick={() => handleRouterClick(`/catalog/${category.name}`)}
+      onClick={() => handleRouterClick(`/catalog/category/${category.slug}`)}
     >
       <div className="flex min-h-[140px] items-center justify-center rounded-t-xl bg-gradient-to-r from-[#5033C3] to-purple-600">
         <Image
