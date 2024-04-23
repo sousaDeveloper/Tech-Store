@@ -1,26 +1,32 @@
 "use client";
 
-import { Product } from "@prisma/client";
+import { ProductWithTotalPrice } from "@/helpers/product";
 import { ReactNode, createContext, useState } from "react";
 
-interface CartProduct extends Product {
+export interface CartProduct extends ProductWithTotalPrice {
   quantity: number;
 }
 
 interface ICartProduct {
   products: CartProduct[];
+  quantity: number;
   cartTotalPrice: number;
   cartBasePrice: number;
   cartTotalDiscount: number;
   addProductToCart: (product: CartProduct) => void;
+  handleDecreaseQuantityClick: () => void;
+  handleIncreaseQuantityClick: () => void;
 }
 
 export const CartContext = createContext<ICartProduct>({
   products: [],
   cartTotalPrice: 0,
+  quantity: 0,
   cartBasePrice: 0,
   cartTotalDiscount: 0,
   addProductToCart: () => {},
+  handleDecreaseQuantityClick: () => {},
+  handleIncreaseQuantityClick: () => {},
 });
 
 export default function CartContextProvider({
@@ -29,20 +35,38 @@ export default function CartContextProvider({
   children: ReactNode;
 }) {
   const [products, setProducts] = useState<CartProduct[]>([]);
+  const [quantity, setQuantity] = useState(1);
 
   const addProductToCart = (product: CartProduct) => {
-    const productAlreadysInCart = products.some((p) => p.name === product.name);
+    const productIsAlreadyOnCart = products.some(
+      (item) => item.id === product.id,
+    );
 
-    if (productAlreadysInCart) {
-      const updatedProducts = products.map((item) =>
-        item.name === product.name
-          ? { ...item, quantity: item.quantity + 1 }
-          : item,
+    if (productIsAlreadyOnCart) {
+      setProducts((prev) =>
+        prev.map((cartProduct) =>
+          cartProduct.id === product.id
+            ? {
+                ...cartProduct,
+                quantity: cartProduct.quantity + product.quantity,
+              }
+            : cartProduct,
+        ),
       );
-      return setProducts(updatedProducts);
+      return;
     }
+    
+    setProducts((prev) => [...prev, product]);
+  };
 
-    return setProducts((prevState) => [...prevState, product]);
+  const handleDecreaseQuantityClick = () => {
+    return setQuantity((prevState) =>
+      prevState === 1 ? prevState : prevState - 1,
+    );
+  };
+
+  const handleIncreaseQuantityClick = () => {
+    return setQuantity((prevState) => prevState + 1);
   };
 
   return (
@@ -50,6 +74,9 @@ export default function CartContextProvider({
       value={{
         products,
         addProductToCart,
+        handleDecreaseQuantityClick,
+        handleIncreaseQuantityClick,
+        quantity,
         cartTotalPrice: 0,
         cartBasePrice: 0,
         cartTotalDiscount: 0,

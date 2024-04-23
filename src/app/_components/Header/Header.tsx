@@ -141,7 +141,7 @@ export default function Header() {
             )}
           </Button>
         </SheetTrigger>
-        <SheetContent className="w-[90%] p-0 pt-[1.3rem]">
+        <SheetContent className="w-full overflow-y-scroll p-0 pt-[1.3rem] [&::-webkit-scrollbar]:hidden">
           <SheetHeader className="w-full border-b pb-3 pl-3">
             <SheetTitle>
               <Badge
