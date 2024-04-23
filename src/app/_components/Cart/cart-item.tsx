@@ -9,16 +9,23 @@ interface CartItemProps {
 }
 
 export default function CartItem({ product }: CartItemProps) {
-  const { handleDecreaseQuantity, handleIncreaseQuantity } =
-    useContext(CartContext);
+  const {
+    handleDecreaseQuantity,
+    handleIncreaseQuantity,
+    removeProductFromCart,
+  } = useContext(CartContext);
 
   const handleDecreaseQuantityClick = () => {
-    return handleDecreaseQuantity(product.id)
-  }
+    return handleDecreaseQuantity(product.id);
+  };
 
   const handleIncreaseQuantityClick = () => {
-    return handleIncreaseQuantity(product.id)
-  }
+    return handleIncreaseQuantity(product.id);
+  };
+
+  const removeProductFromCartClick = () => {
+    return removeProductFromCart(product.id);
+  };
 
   const discountPrice = +product.basePrice - product.totalPrice;
 
@@ -77,7 +84,7 @@ export default function CartItem({ product }: CartItemProps) {
           </div>
         </div>
         <div>
-          <Button variant="outline">
+          <Button variant="outline" onClick={removeProductFromCartClick}>
             <TrashIcon size={18} />
           </Button>
         </div>
