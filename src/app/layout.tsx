@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "./_components/Header/Header";
 import { AuthProvider } from "@/providers/auth";
 import Footer from "./(home)/components/footer";
+import CartContextProvider from "@/providers/cart";
 
 const sora = Sora({
   weight: "400",
@@ -24,9 +25,11 @@ export default function RootLayout({
       <body className={sora.className}>
         <div className="flex h-full flex-col">
           <AuthProvider>
-            <Header />
-            <div className="flex-1">{children}</div>
-            <Footer />
+            <CartContextProvider>
+              <Header />
+              <div className="flex-1">{children}</div>
+              <Footer />
+            </CartContextProvider>
           </AuthProvider>
         </div>
       </body>
