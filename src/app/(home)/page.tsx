@@ -1,7 +1,7 @@
 import { prismaClient } from "@/lib/prisma";
 
 import Categories from "./components/categories";
-import ProductList from "./components/product-list";
+import ProductList from "../_components/product-list";
 import BannerHome from "./components/banner-home";
 
 export default async function Home() {
@@ -31,7 +31,7 @@ export default async function Home() {
 
   return (
     <>
-      <main className="p-5 mt-14">
+      <main className="mt-14 p-5">
         <BannerHome
           src="/banner-home-01.png"
           alt="Até 55% de desconto só esse mês!"

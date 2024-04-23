@@ -3,6 +3,7 @@ import { prismaClient } from "@/lib/prisma";
 
 import ProductImages from "../components/product-images";
 import ProductInfo from "../components/product-info";
+import ProductList from "@/app/_components/product-list";
 
 interface ProductDetailsPageProps {
   params: {
@@ -17,6 +18,19 @@ export default async function ProductDetailsPage({
     where: {
       slug: slug,
     },
+    include: {
+      category: {
+        include: {
+          products: {
+            where: {
+              slug: {
+                not: slug,
+              },
+            },
+          },
+        },
+      },
+    },
   });
 
   if (!product) return null;
@@ -26,6 +40,12 @@ export default async function ProductDetailsPage({
       <div className="mt-[5rem] h-full">
         <ProductImages imageUrls={product.imageUrls} name={product.name} />
         <ProductInfo product={computeProductTotalPrice(product)} />
+        <div className="px-5">
+          <ProductList
+            products={product.category.products}
+            className="flex gap-2 overflow-x-auto [&::-webkit-scrollbar]:hidden"
+          />
+        </div>
       </div>
     </div>
   );

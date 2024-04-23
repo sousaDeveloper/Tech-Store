@@ -13,7 +13,6 @@ import { ProductWithTotalPrice } from "@/helpers/product";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import ProductList from "@/app/(home)/components/product-list";
 
 interface ProductInfoProps {
   product: Pick<
@@ -49,7 +48,7 @@ export default function ProductInfo({
   );
 
   return (
-    <div className="p-5">
+    <div className="p-5 pb-1">
       <p className="text-sm text-gray-400">Novo | 100 vendidos</p>
       <p className="text-lg">{name}</p>
       <p className="text-primary">Disponível em estoque</p>
