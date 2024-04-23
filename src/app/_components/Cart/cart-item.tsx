@@ -9,8 +9,16 @@ interface CartItemProps {
 }
 
 export default function CartItem({ product }: CartItemProps) {
-  const { handleDecreaseQuantityClick, handleIncreaseQuantityClick } =
+  const { handleDecreaseQuantity, handleIncreaseQuantity } =
     useContext(CartContext);
+
+  const handleDecreaseQuantityClick = () => {
+    return handleDecreaseQuantity(product.id)
+  }
+
+  const handleIncreaseQuantityClick = () => {
+    return handleIncreaseQuantity(product.id)
+  }
 
   const discountPrice = +product.basePrice - product.totalPrice;
 

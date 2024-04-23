@@ -14,8 +14,8 @@ interface ICartProduct {
   cartBasePrice: number;
   cartTotalDiscount: number;
   addProductToCart: (product: CartProduct) => void;
-  handleDecreaseQuantityClick: () => void;
-  handleIncreaseQuantityClick: () => void;
+  handleDecreaseQuantity: (productId: string) => void;
+  handleIncreaseQuantity: (productId: string) => void;
 }
 
 export const CartContext = createContext<ICartProduct>({
@@ -25,8 +25,8 @@ export const CartContext = createContext<ICartProduct>({
   cartBasePrice: 0,
   cartTotalDiscount: 0,
   addProductToCart: () => {},
-  handleDecreaseQuantityClick: () => {},
-  handleIncreaseQuantityClick: () => {},
+  handleDecreaseQuantity: () => {},
+  handleIncreaseQuantity: () => {},
 });
 
 export default function CartContextProvider({
@@ -35,7 +35,6 @@ export default function CartContextProvider({
   children: ReactNode;
 }) {
   const [products, setProducts] = useState<CartProduct[]>([]);
-  const [quantity, setQuantity] = useState(1);
 
   const addProductToCart = (product: CartProduct) => {
     const productIsAlreadyOnCart = products.some(
@@ -55,18 +54,31 @@ export default function CartContextProvider({
       );
       return;
     }
-    
+
     setProducts((prev) => [...prev, product]);
   };
 
-  const handleDecreaseQuantityClick = () => {
-    return setQuantity((prevState) =>
-      prevState === 1 ? prevState : prevState - 1,
+  const handleDecreaseQuantity = (productId: string) => {
+    setProducts((prev) =>
+      prev
+        .map((cartProduct) =>
+          cartProduct.id === productId
+            ? { ...cartProduct, quantity: cartProduct.quantity - 1 }
+            : cartProduct,
+        )
+        .filter((cartProduct) => cartProduct.quantity > 0),
     );
+    return;
   };
 
-  const handleIncreaseQuantityClick = () => {
-    return setQuantity((prevState) => prevState + 1);
+  const handleIncreaseQuantity = (productId: string) => {
+    return setProducts((prev) =>
+      prev.map((cartProduct) =>
+        cartProduct.id === productId
+          ? { ...cartProduct, quantity: cartProduct.quantity + 1 }
+          : cartProduct,
+      ),
+    );
   };
 
   return (
@@ -74,9 +86,9 @@ export default function CartContextProvider({
       value={{
         products,
         addProductToCart,
-        handleDecreaseQuantityClick,
-        handleIncreaseQuantityClick,
-        quantity,
+        handleDecreaseQuantity,
+        handleIncreaseQuantity,
+        quantity: 0,
         cartTotalPrice: 0,
         cartBasePrice: 0,
         cartTotalDiscount: 0,

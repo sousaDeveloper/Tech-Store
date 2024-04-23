@@ -20,13 +20,12 @@ interface ProductInfoProps {
 }
 
 export default function ProductInfo({ product }: ProductInfoProps) {
+  const [quantity, setQuantity] = useState(1);
   const { addProductToCart } = useContext(CartContext);
 
   const addProductToCartClick = () => {
     return addProductToCart({ ...product, quantity });
   };
-
-  const [quantity, setQuantity] = useState(1);
 
   const handleDecreaseQuantityClick = () => {
     return setQuantity((prevState) =>
