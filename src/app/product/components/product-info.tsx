@@ -7,23 +7,25 @@ import {
   StarIcon,
   TruckIcon,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 
 import { ProductWithTotalPrice } from "@/helpers/product";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { CartContext } from "@/providers/cart";
 
 interface ProductInfoProps {
-  product: Pick<
-    ProductWithTotalPrice,
-    "basePrice" | "discountPercentage" | "description" | "name" | "totalPrice"
-  >;
+  product: ProductWithTotalPrice;
 }
 
-export default function ProductInfo({
-  product: { basePrice, totalPrice, description, name, discountPercentage },
-}: ProductInfoProps) {
+export default function ProductInfo({ product }: ProductInfoProps) {
+  const { addProductToCart } = useContext(CartContext);
+
+  const addProductToCartClick = () => {
+    return addProductToCart({ ...product, quantity });
+  };
+
   const [quantity, setQuantity] = useState(1);
 
   const handleDecreaseQuantityClick = () => {
@@ -36,7 +38,7 @@ export default function ProductInfo({
     return setQuantity((prevState) => prevState + 1);
   };
 
-  const calculateDiscount = +basePrice - totalPrice;
+  const calculateDiscount = +product.basePrice - product.totalPrice;
 
   const priceFormated = useMemo(
     () =>
@@ -50,7 +52,7 @@ export default function ProductInfo({
   return (
     <div className="p-5 pb-1">
       <p className="text-sm text-gray-400">Novo | 100 vendidos</p>
-      <p className="text-lg">{name}</p>
+      <p className="text-lg">{product.name}</p>
       <p className="text-primary">Disponível em estoque</p>
 
       <div className="flex items-center gap-1">
@@ -63,22 +65,24 @@ export default function ProductInfo({
       </div>
 
       <div className="mt-4 flex items-center gap-2">
-        {discountPercentage > 0 ? (
+        {product.discountPercentage > 0 ? (
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
               <p className="text-lg font-semibold">{priceFormated}</p>
               <Badge className="h-fit w-fit">
                 <ArrowDown size={14} />
-                {discountPercentage}%
+                {product.discountPercentage}%
               </Badge>
             </div>
             <p className="opacity-40">
               De:{" "}
-              <span className="text-sm line-through">R$ {+basePrice},00</span>
+              <span className="text-sm line-through">
+                R$ {+product.basePrice},00
+              </span>
             </p>
           </div>
         ) : (
-          <h1 className="text-lg font-semibold">R$ {+basePrice},00</h1>
+          <h1 className="text-lg font-semibold">R$ {+product.basePrice},00</h1>
         )}
       </div>
       <div className="mt-4 flex items-center gap-2">
@@ -99,12 +103,14 @@ export default function ProductInfo({
       <div className="mt-6">
         <h2 className="text-lg font-semibold">Descrição</h2>
         <p className="h-[6.8rem] overflow-x-auto opacity-65 [&::-webkit-scrollbar]:hidden">
-          {description}
+          {product.description}
         </p>
       </div>
 
       <div className="mt-8 flex flex-col">
-        <Button className="w-full">ADICIONAR AO CARRINHO</Button>
+        <Button className="w-full" onClick={addProductToCartClick}>
+          ADICIONAR AO CARRINHO
+        </Button>
         <div className="mt-4 flex items-center justify-between rounded-lg bg-accent px-4 py-2">
           <div className="flex items-center gap-2">
             <TruckIcon size={25} />

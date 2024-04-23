@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import { Sora } from "next/font/google";
-import "./globals.css";
-import Header from "./_components/Header/Header";
+
+
 import { AuthProvider } from "@/providers/auth";
-import Footer from "./(home)/components/footer";
 import CartContextProvider from "@/providers/cart";
+
+import Header from "./_components/Header/Header";
+import Footer from "./(home)/components/footer";
+
+import "./globals.css";
 
 const sora = Sora({
   weight: "400",

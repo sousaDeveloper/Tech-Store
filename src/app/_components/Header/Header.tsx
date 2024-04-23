@@ -24,8 +24,13 @@ import {
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ButtonMenu from "./ButtonMenu/ButtonMenu";
+import { Badge } from "@/components/ui/badge";
+import Cart from "../Cart/cart";
+import { useContext } from "react";
+import { CartContext } from "@/providers/cart";
 
 export default function Header() {
+  const { products } = useContext(CartContext);
   const router = useRouter();
 
   const handleRouterClick = (path: string) => {
@@ -125,9 +130,32 @@ export default function Header() {
         Tech Store
       </h1>
 
-      <Button size="icon" variant="outline">
-        <ShoppingCartIcon size={21} />
-      </Button>
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button size="icon" variant="outline">
+            <ShoppingCartIcon size={21} />
+            {products.length === 0 ? null : (
+              <p className="absolute right-6 top-4 rounded-full bg-[#5033C3] px-[0.2rem]">
+                {products.length}
+              </p>
+            )}
+          </Button>
+        </SheetTrigger>
+        <SheetContent className="w-[90%] p-0 pt-[1.3rem]">
+          <SheetHeader className="w-full border-b pb-3 pl-3">
+            <SheetTitle>
+              <Badge
+                className="flex w-fit gap-1 border-2 border-primary"
+                variant="outline"
+              >
+                <ShoppingCartIcon />
+                <p className="text-sm">Carrinho</p>
+              </Badge>
+            </SheetTitle>
+          </SheetHeader>
+          <Cart />
+        </SheetContent>
+      </Sheet>
     </header>
   );
 }
