@@ -10,10 +10,11 @@ import {
 import { useContext, useMemo, useState } from "react";
 
 import { ProductWithTotalPrice } from "@/helpers/product";
+import { CartContext } from "@/providers/cart";
 
+import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CartContext } from "@/providers/cart";
 
 interface ProductInfoProps {
   product: ProductWithTotalPrice;
@@ -24,6 +25,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
   const { addProductToCart } = useContext(CartContext);
 
   const addProductToCartClick = () => {
+    toast("Produto adicionado ao carrinho", {});
     return addProductToCart({ ...product, quantity });
   };
 

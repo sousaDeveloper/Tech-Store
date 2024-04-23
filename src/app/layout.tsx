@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Sora } from "next/font/google";
 
-
 import { AuthProvider } from "@/providers/auth";
 import CartContextProvider from "@/providers/cart";
 
+import { Toaster } from "@/components/ui/sonner";
 import Header from "./_components/Header/Header";
 import Footer from "./(home)/components/footer";
 
@@ -32,6 +32,7 @@ export default function RootLayout({
             <CartContextProvider>
               <Header />
               <div className="flex-1">{children}</div>
+              <Toaster />
               <Footer />
             </CartContextProvider>
           </AuthProvider>
