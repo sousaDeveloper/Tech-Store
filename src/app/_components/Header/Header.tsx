@@ -1,8 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useContext, useMemo } from "react";
 
 import { signIn, signOut, useSession } from "next-auth/react";
+import { CartContext } from "@/providers/cart";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -26,8 +28,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ButtonMenu from "./ButtonMenu/ButtonMenu";
 import { Badge } from "@/components/ui/badge";
 import Cart from "../Cart/cart";
-import { useContext } from "react";
-import { CartContext } from "@/providers/cart";
 
 export default function Header() {
   const { products } = useContext(CartContext);
@@ -36,6 +36,11 @@ export default function Header() {
   const handleRouterClick = (path: string) => {
     router.push(path);
   };
+
+  const sumProductsInCart = useMemo(
+    () => products.reduce((accum, sum) => accum + sum.quantity, 0),
+    [products],
+  );
 
   const { status, data } = useSession();
 
@@ -134,9 +139,9 @@ export default function Header() {
         <SheetTrigger asChild>
           <Button size="icon" variant="outline">
             <ShoppingCartIcon size={21} />
-            {products.length === 0 ? null : (
+            {sumProductsInCart > 0 && (
               <p className="absolute right-6 top-4 rounded-full bg-[#5033C3] px-[0.2rem]">
-                {products.length}
+                {sumProductsInCart}
               </p>
             )}
           </Button>
