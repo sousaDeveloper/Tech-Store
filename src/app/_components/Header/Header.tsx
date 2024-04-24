@@ -119,7 +119,7 @@ export default function Header() {
             </SheetClose>
 
             <SheetClose>
-              <ButtonMenu>
+              <ButtonMenu onClick={() => handleRouterClick("/offers")}>
                 <PercentIcon size={16} />
                 Ofertas
               </ButtonMenu>
