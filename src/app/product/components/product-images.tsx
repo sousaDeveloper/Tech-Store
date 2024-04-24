@@ -35,7 +35,11 @@ const ProductImages = ({ name, imageUrls }: ProductImagesProps) => {
           }}
         />
       </div>
-      <div className="mt-8 grid grid-cols-4 gap-4 px-5">
+      <div
+        className="mt-8 grid grid-cols-4 gap-4 px-5"
+        data-aos="fade-down"
+        data-aos-duration="1000"
+      >
         {imageUrls.map((imageUrl, index) => (
           <button
             key={index}

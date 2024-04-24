@@ -34,6 +34,8 @@ export default function ProductItem({ product }: ProductItemProps) {
     <div
       className="flex max-w-[156px] cursor-pointer flex-col gap-2 transition-all duration-300 hover:-translate-y-1"
       onClick={handleRouterProcuctClick}
+      data-aos="fade-up"
+      data-aos-duration="1000"
     >
       <div className="relative flex h-[170px] w-[156px] items-center justify-center rounded-xl bg-accent">
         <Image

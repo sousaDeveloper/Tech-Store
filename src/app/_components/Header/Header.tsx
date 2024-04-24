@@ -72,7 +72,11 @@ export default function Header() {
           </SheetHeader>
 
           {status === "authenticated" && data?.user && (
-            <div className="flex items-center gap-2 p-2 pb-0">
+            <div
+              className="flex items-center gap-2 p-2 pb-0"
+              data-aos="fade-right"
+              data-aos-duration="1000"
+            >
               <Avatar>
                 <AvatarFallback>
                   {data.user.name?.[0].toUpperCase()}
@@ -87,7 +91,11 @@ export default function Header() {
             </div>
           )}
 
-          <div className="mx-2 mt-5 flex flex-col gap-2">
+          <div
+            className="mx-2 mt-5 flex flex-col gap-2"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+          >
             {status === "unauthenticated" && (
               <SheetClose>
                 <ButtonMenu onClick={handleLoginClick}>

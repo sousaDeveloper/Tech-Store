@@ -35,6 +35,7 @@ export default async function Home() {
         <BannerHome
           src="/banner-home-01.png"
           alt="Até 55% de desconto só esse mês!"
+          data-aos="fade-up"
         />
 
         <div className="mt-8">
@@ -43,7 +44,9 @@ export default async function Home() {
       </main>
 
       <div className="p-5 pt-2">
-        <p className="mb-1">OFERTAS</p>
+        <p className="mb-1" data-aos="fade-right" data-aos-duration="1000">
+          OFERTAS
+        </p>
         <ProductList
           products={deals}
           className="flex w-full gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden"
@@ -56,7 +59,9 @@ export default async function Home() {
       />
 
       <div className="mt-3 p-5">
-        <p className="mb-1">TECLADOS</p>
+        <p className="mb-1" data-aos="fade-right" data-aos-duration="1000">
+          TECLADOS
+        </p>
         <ProductList
           products={keyboards}
           className="flex w-full gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden"
@@ -69,7 +74,9 @@ export default async function Home() {
       />
 
       <div className="mt-3 p-5">
-        <p className="mb-1">MOUSES</p>
+        <p className="mb-1" data-aos="fade-right" data-aos-duration="1000">
+          MOUSES
+        </p>
         <ProductList
           products={mouses}
           className="flex w-full gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden"

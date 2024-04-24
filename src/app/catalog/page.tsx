@@ -13,14 +13,20 @@ export default async function CatalogPage() {
       <Badge
         className="flex w-[7rem] gap-1 border-primary uppercase"
         variant="outline"
+        data-aos="fade-right"
+        data-aos-duration="1000"
       >
         <ShapesIcon />
         Catálogo
       </Badge>
 
-      <div className="mt-6 flex flex-wrap justify-center gap-8">
+      <div
+        className="mt-6 flex flex-wrap justify-center gap-8"
+        data-aos="fade-up"
+        data-aos-duration="1000"
+      >
         {categories.map((category) => (
-          <CategoryList category={category} key={category.id} />
+          <CategoryList category={category} key={category.id}/>
         ))}
       </div>
     </div>

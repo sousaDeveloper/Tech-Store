@@ -22,6 +22,8 @@ export default function CategoryItem({ category }: CategoryItemProps) {
         variant="outline"
         className="flex w-[167px] gap-2"
         onClick={() => handleRouterClick(`/catalog/category/${category.slug}`)}
+        data-aos="fade-up"
+        data-aos-duration="1000"
       >
         {CATEGORY_ICON[category.slug as keyof typeof CATEGORY_ICON]}
         <span>{category.name}</span>
