@@ -28,6 +28,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ButtonMenu from "./ButtonMenu/ButtonMenu";
 import { Badge } from "@/components/ui/badge";
 import Cart from "../Cart/cart";
+import { toast } from "sonner";
 
 export default function Header() {
   const { products } = useContext(CartContext);
@@ -46,9 +47,11 @@ export default function Header() {
 
   const handleLoginClick = async () => {
     await signIn();
+    return toast("Login realizado.");
   };
 
   const handleLogoutClick = async () => {
+    toast("Você deslogou da sua conta com sucesso.");
     await signOut();
   };
 
