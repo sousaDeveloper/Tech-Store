@@ -1,7 +1,8 @@
 "use client";
 
+import { ReactNode, createContext, useMemo, useState } from "react";
+
 import { ProductWithTotalPrice } from "@/helpers/product";
-import { ReactNode, createContext, useState } from "react";
 
 export interface CartProduct extends ProductWithTotalPrice {
   quantity: number;
@@ -13,6 +14,9 @@ interface ICartProduct {
   cartTotalPrice: number;
   cartBasePrice: number;
   cartTotalDiscount: number;
+  formatedTotalPrice: string;
+  formatedcalculateTotalDiscount: string;
+  formatedTotalPriceWithDiscount: string;
   addProductToCart: (product: CartProduct) => void;
   handleDecreaseQuantity: (productId: string) => void;
   handleIncreaseQuantity: (productId: string) => void;
@@ -25,6 +29,9 @@ export const CartContext = createContext<ICartProduct>({
   quantity: 0,
   cartBasePrice: 0,
   cartTotalDiscount: 0,
+  formatedTotalPrice: "",
+  formatedcalculateTotalDiscount: "",
+  formatedTotalPriceWithDiscount: "",
   addProductToCart: () => {},
   handleDecreaseQuantity: () => {},
   handleIncreaseQuantity: () => {},
@@ -89,6 +96,54 @@ export default function CartContextProvider({
     );
   };
 
+  const calculateTotalPrice = products.reduce(
+    (accum, sum) => accum + +sum.basePrice * sum.quantity,
+    0,
+  );
+
+  const formatedTotalPrice = useMemo(
+    () =>
+      Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      }).format(calculateTotalPrice),
+    [calculateTotalPrice],
+  );
+
+  const calculateTotalDiscount = products.reduce(
+    (accum, sum) =>
+      sum.discountPercentage === 0
+        ? accum
+        : accum + sum.totalPrice * sum.quantity,
+    0,
+  );
+
+  const formatedcalculateTotalDiscount = useMemo(
+    () =>
+      Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      }).format(calculateTotalDiscount),
+    [calculateTotalDiscount],
+  );
+
+  const calculateTotalPriceWithDiscount = products.reduce(
+    (accum, sum) =>
+      sum.discountPercentage === 0
+        ? accum + +sum.basePrice * sum.quantity
+        : accum + (+sum.basePrice - sum.totalPrice) * sum.quantity,
+    0,
+  );
+
+  const formatedTotalPriceWithDiscount = useMemo(
+    () =>
+      Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      }).format(calculateTotalPriceWithDiscount),
+    [calculateTotalPriceWithDiscount],
+  );
+
   return (
     <CartContext.Provider
       value={{
@@ -97,6 +152,9 @@ export default function CartContextProvider({
         handleDecreaseQuantity,
         handleIncreaseQuantity,
         removeProductFromCart,
+        formatedTotalPrice,
+        formatedcalculateTotalDiscount,
+        formatedTotalPriceWithDiscount,
         quantity: 0,
         cartTotalPrice: 0,
         cartBasePrice: 0,
