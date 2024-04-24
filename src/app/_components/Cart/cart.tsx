@@ -35,7 +35,7 @@ export default function Cart() {
     <>
       <div className="flex flex-col gap-2 p-4">
         <div
-          className={`flex flex-col gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden ${products.length === 0 ? "h-0" : "h-[18rem]"}`}
+          className={`flex flex-col gap-3 overflow-x-auto ${products.length === 0 ? "h-0" : "h-[18rem]"}`}
         >
           {products.map((product) => (
             <CartItem

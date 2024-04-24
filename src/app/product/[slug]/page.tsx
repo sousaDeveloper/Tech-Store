@@ -43,7 +43,7 @@ export default async function ProductDetailsPage({
         <div className="px-5">
           <ProductList
             products={product.category.products}
-            className="flex gap-2 overflow-x-auto [&::-webkit-scrollbar]:hidden"
+            className="flex gap-2 overflow-y-auto [&::-webkit-scrollbar]:hidden"
           />
         </div>
       </div>

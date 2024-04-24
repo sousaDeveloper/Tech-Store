@@ -8,6 +8,20 @@
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: hsl(var(--accent));
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #5033c3;
+  border-radius: 0.1rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #2d1d6e;
+}
+
 @layer base {
   :root {
     --background: 0 0% 4%;
