@@ -18,6 +18,7 @@
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
+    "@stripe/stripe-js": "^3.3.0",
     "aos": "^2.3.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
@@ -28,6 +29,7 @@
     "react": "^18",
     "react-dom": "^18",
     "sonner": "^1.4.41",
+    "stripe": "^15.3.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "ts-node": "^10.9.2"

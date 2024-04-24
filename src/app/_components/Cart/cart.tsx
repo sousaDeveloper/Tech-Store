@@ -1,24 +1,41 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { Loader2Icon } from "lucide-react";
 
 import { CartContext } from "@/providers/cart";
 import computeProductTotalPrice from "@/helpers/product";
+import { loadStripe } from "@stripe/stripe-js";
+import createCheckout from "@/actions/checkout";
 
-import CartItem from "./cart-item";
 import { Button } from "@/components/ui/button";
+import CartItem from "./cart-item";
 
 export default function Cart() {
   const {
     products,
-    formatedTotalPrice,
-    formatedTotalPriceWithDiscount,
-    formatedcalculateTotalDiscount,
+    totalFormatted,
+    subTotalFormatted,
+    totalDiscountFormatted,
   } = useContext(CartContext);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleFinishPurchaseClick = async () => {
+    setIsLoading(true);
+
+    const checkout = await createCheckout(products);
+
+    const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
+
+    stripe?.redirectToCheckout({
+      sessionId: checkout.id,
+    });
+  };
 
   return (
     <>
       <div className="flex flex-col gap-2 p-4">
         <div
-          className={`flex flex-col gap-3 overflow-x-auto ${products.length === 0 ? "h-0" : "h-[18rem]"}`}
+          className={`flex flex-col gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden ${products.length === 0 ? "h-0" : "h-[18rem]"}`}
         >
           {products.map((product) => (
             <CartItem
@@ -37,7 +54,7 @@ export default function Cart() {
               <hr />
               <div className="flex justify-between px-1 py-3">
                 <p>Subtotal</p>
-                <p className="opacity-80">{formatedTotalPrice}</p>
+                <p className="opacity-80">{subTotalFormatted}</p>
               </div>
               <hr />
               <div className="flex justify-between px-1 py-3">
@@ -47,16 +64,22 @@ export default function Cart() {
               <hr />
               <div className="flex justify-between px-1 py-3">
                 <p>Descontos</p>
-                <p className="opacity-80">- {formatedcalculateTotalDiscount}</p>
+                <p className="opacity-80">- {totalFormatted}</p>
               </div>
               <hr />
               <div className="flex justify-between px-1 py-3">
                 <p className="font-semibold">Total</p>
-                <p className="font-semibold">
-                  {formatedTotalPriceWithDiscount}
-                </p>
+                <p className="font-semibold">{totalDiscountFormatted}</p>
               </div>
-              <Button className="bottom-0">FINALIZAR COMPRA</Button>
+              <Button
+                className="flex items-center gap-1"
+                onClick={handleFinishPurchaseClick}
+              >
+                FINALIZAR COMPRA
+                {isLoading && (
+                  <Loader2Icon className="animate-spin" size={18} />
+                )}
+              </Button>
             </div>
           </>
         ) : (
