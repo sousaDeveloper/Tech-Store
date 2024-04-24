@@ -12,17 +12,17 @@ interface CartItemProps {
 
 export default function CartItem({ product }: CartItemProps) {
   const {
-    handleDecreaseQuantity,
-    handleIncreaseQuantity,
+    decreaseProductQuantity,
+    increaseProductQuantity,
     removeProductFromCart,
   } = useContext(CartContext);
 
   const handleDecreaseQuantityClick = () => {
-    return handleDecreaseQuantity(product.id);
+    return decreaseProductQuantity(product.id);
   };
 
   const handleIncreaseQuantityClick = () => {
-    return handleIncreaseQuantity(product.id);
+    return increaseProductQuantity(product.id);
   };
 
   const removeProductFromCartClick = () => {

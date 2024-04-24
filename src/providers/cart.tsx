@@ -3,90 +3,138 @@
 import { ReactNode, createContext, useMemo, useState } from "react";
 
 import { ProductWithTotalPrice } from "@/helpers/product";
-
 export interface CartProduct extends ProductWithTotalPrice {
   quantity: number;
 }
 
-interface ICartProduct {
+interface ICartContext {
   products: CartProduct[];
-  quantity: number;
   cartTotalPrice: number;
   cartBasePrice: number;
   cartTotalDiscount: number;
-  formatedTotalPrice: string;
-  formatedcalculateTotalDiscount: string;
-  formatedTotalPriceWithDiscount: string;
+  totalFormatted: string;
+  subTotalFormatted: string;
+  totalDiscountFormatted: string;
   addProductToCart: (product: CartProduct) => void;
-  handleDecreaseQuantity: (productId: string) => void;
-  handleIncreaseQuantity: (productId: string) => void;
+  decreaseProductQuantity: (productId: string) => void;
+  increaseProductQuantity: (productId: string) => void;
   removeProductFromCart: (productId: string) => void;
 }
 
-export const CartContext = createContext<ICartProduct>({
+export const CartContext = createContext<ICartContext>({
   products: [],
   cartTotalPrice: 0,
-  quantity: 0,
   cartBasePrice: 0,
   cartTotalDiscount: 0,
-  formatedTotalPrice: "",
-  formatedcalculateTotalDiscount: "",
-  formatedTotalPriceWithDiscount: "",
+  totalFormatted: "",
+  subTotalFormatted: "",
+  totalDiscountFormatted: "",
   addProductToCart: () => {},
-  handleDecreaseQuantity: () => {},
-  handleIncreaseQuantity: () => {},
+  decreaseProductQuantity: () => {},
+  increaseProductQuantity: () => {},
   removeProductFromCart: () => {},
 });
 
-export default function CartContextProvider({
-  children,
-}: {
-  children: ReactNode;
-}) {
+const CartProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<CartProduct[]>([]);
+
+  // Total sem descontos
+  const subtotal = useMemo(() => {
+    return products.reduce((acc, product) => {
+      return acc + Number(product.basePrice) * product.quantity;
+    }, 0);
+  }, [products]);
+
+  const subTotalFormatted = useMemo(
+    () =>
+      Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      }).format(subtotal),
+    [subtotal],
+  );
+
+  // Total com descontos
+  const total = useMemo(() => {
+    return products.reduce((acc, product) => {
+      return acc + product.totalPrice * product.quantity;
+    }, 0);
+  }, [products]);
+
+  const totalFormatted = useMemo(
+    () =>
+      Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      }).format(total),
+    [total],
+  );
+
+  const totalDiscount = subtotal - total;
+
+  const totalDiscountFormatted = useMemo(
+    () =>
+      Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      }).format(totalDiscount),
+    [totalDiscount],
+  );
 
   const addProductToCart = (product: CartProduct) => {
     const productIsAlreadyOnCart = products.some(
-      (item) => item.id === product.id,
+      (cartProduct) => cartProduct.id === product.id,
     );
 
     if (productIsAlreadyOnCart) {
       setProducts((prev) =>
-        prev.map((cartProduct) =>
-          cartProduct.id === product.id
-            ? {
-                ...cartProduct,
-                quantity: cartProduct.quantity + product.quantity,
-              }
-            : cartProduct,
-        ),
+        prev.map((cartProduct) => {
+          if (cartProduct.id === product.id) {
+            return {
+              ...cartProduct,
+              quantity: cartProduct.quantity + product.quantity,
+            };
+          }
+
+          return cartProduct;
+        }),
       );
+
       return;
     }
 
     setProducts((prev) => [...prev, product]);
   };
 
-  const handleDecreaseQuantity = (productId: string) => {
+  const decreaseProductQuantity = (productId: string) => {
     setProducts((prev) =>
       prev
-        .map((cartProduct) =>
-          cartProduct.id === productId
-            ? { ...cartProduct, quantity: cartProduct.quantity - 1 }
-            : cartProduct,
-        )
+        .map((cartProduct) => {
+          if (cartProduct.id === productId) {
+            return {
+              ...cartProduct,
+              quantity: cartProduct.quantity - 1,
+            };
+          }
+
+          return cartProduct;
+        })
         .filter((cartProduct) => cartProduct.quantity > 0),
     );
-    return;
   };
 
-  const handleIncreaseQuantity = (productId: string) => {
-    return setProducts((prev) =>
-      prev.map((cartProduct) =>
-        cartProduct.id === productId
-          ? { ...cartProduct, quantity: cartProduct.quantity + 1 }
-          : cartProduct,
-      ),
+  const increaseProductQuantity = (productId: string) => {
+    setProducts((prev) =>
+      prev.map((cartProduct) => {
+        if (cartProduct.id === productId) {
+          return {
+            ...cartProduct,
+            quantity: cartProduct.quantity + 1,
+          };
+        }
+
+        return cartProduct;
+      }),
     );
   };
 
@@ -96,66 +144,17 @@ export default function CartContextProvider({
     );
   };
 
-  const calculateTotalPrice = products.reduce(
-    (accum, sum) => accum + +sum.basePrice * sum.quantity,
-    0,
-  );
-
-  const formatedTotalPrice = useMemo(
-    () =>
-      Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(calculateTotalPrice),
-    [calculateTotalPrice],
-  );
-
-  const calculateTotalDiscount = products.reduce(
-    (accum, sum) =>
-      sum.discountPercentage === 0
-        ? accum
-        : accum + sum.totalPrice * sum.quantity,
-    0,
-  );
-
-  const formatedcalculateTotalDiscount = useMemo(
-    () =>
-      Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(calculateTotalDiscount),
-    [calculateTotalDiscount],
-  );
-
-  const calculateTotalPriceWithDiscount = products.reduce(
-    (accum, sum) =>
-      sum.discountPercentage === 0
-        ? accum + +sum.basePrice * sum.quantity
-        : accum + (+sum.basePrice - sum.totalPrice) * sum.quantity,
-    0,
-  );
-
-  const formatedTotalPriceWithDiscount = useMemo(
-    () =>
-      Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(calculateTotalPriceWithDiscount),
-    [calculateTotalPriceWithDiscount],
-  );
-
   return (
     <CartContext.Provider
       value={{
         products,
         addProductToCart,
-        handleDecreaseQuantity,
-        handleIncreaseQuantity,
+        decreaseProductQuantity,
+        increaseProductQuantity,
         removeProductFromCart,
-        formatedTotalPrice,
-        formatedcalculateTotalDiscount,
-        formatedTotalPriceWithDiscount,
-        quantity: 0,
+        totalFormatted,
+        subTotalFormatted,
+        totalDiscountFormatted,
         cartTotalPrice: 0,
         cartBasePrice: 0,
         cartTotalDiscount: 0,
@@ -164,4 +163,6 @@ export default function CartContextProvider({
       {children}
     </CartContext.Provider>
   );
-}
+};
+
+export default CartProvider;
