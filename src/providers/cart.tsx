@@ -15,6 +15,7 @@ interface ICartContext {
   totalFormatted: string;
   subTotalFormatted: string;
   totalDiscountFormatted: string;
+  clearCart: () => void;
   addProductToCart: (product: CartProduct) => void;
   decreaseProductQuantity: (productId: string) => void;
   increaseProductQuantity: (productId: string) => void;
@@ -29,6 +30,7 @@ export const CartContext = createContext<ICartContext>({
   totalFormatted: "",
   subTotalFormatted: "",
   totalDiscountFormatted: "",
+  clearCart: () => {},
   addProductToCart: () => {},
   decreaseProductQuantity: () => {},
   increaseProductQuantity: () => {},
@@ -85,6 +87,10 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
       }).format(totalDiscount),
     [totalDiscount],
   );
+
+  const clearCart = () => {
+    return setProducts([])
+  }
 
   const addProductToCart = (product: CartProduct) => {
     const productIsAlreadyOnCart = products.some(
@@ -153,6 +159,7 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
     <CartContext.Provider
       value={{
         products,
+        clearCart,
         addProductToCart,
         decreaseProductQuantity,
         increaseProductQuantity,
