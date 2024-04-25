@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useContext, useMemo } from "react";
+import { toast } from "sonner";
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import { CartContext } from "@/providers/cart";
@@ -28,7 +29,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ButtonMenu from "./ButtonMenu/ButtonMenu";
 import { Badge } from "@/components/ui/badge";
 import Cart from "../Cart/cart";
-import { toast } from "sonner";
 
 export default function Header() {
   const { products } = useContext(CartContext);
