@@ -32,12 +32,12 @@ export default function ProductItem({ product }: ProductItemProps) {
 
   return (
     <div
-      className="flex max-w-[156px] cursor-pointer flex-col gap-2 transition-all duration-300 hover:-translate-y-1"
+      className="flex max-w-[156px] cursor-pointer flex-col gap-2 transition-all duration-300 md:w-[15rem] md:max-w-[15rem]"
       onClick={handleRouterProcuctClick}
       data-aos="fade-up"
       data-aos-duration="1000"
     >
-      <div className="relative flex h-[170px] w-[156px] items-center justify-center rounded-xl bg-accent">
+      <div className="relative flex h-[170px] w-[156px] items-center justify-center rounded-xl bg-accent md:h-[200px] md:w-[15rem]">
         <Image
           src={product.imageUrls[0]}
           alt={product.name}
@@ -55,21 +55,25 @@ export default function ProductItem({ product }: ProductItemProps) {
       </div>
 
       <div className="flex flex-col">
-        <p className="overflow-hidden text-ellipsis whitespace-nowrap text-sm text-gray-400">
+        <p className="overflow-hidden text-ellipsis whitespace-nowrap text-sm text-gray-400 md:text-[1rem]">
           {product.name}
         </p>
 
         <div className="flex items-center gap-2">
           {product.discountPercentage > 0 ? (
             <>
-              <p className="text-sm font-semibold">{priceFormated}</p>
+              <p className="text-sm font-semibold md:text-lg">
+                {priceFormated}
+              </p>
 
-              <p className="overflow-hidden text-ellipsis whitespace-nowrap text-sm line-through opacity-60">
+              <p className="overflow-hidden text-ellipsis whitespace-nowrap text-sm line-through opacity-60 md:text-sm">
                 R${+product.basePrice},00
               </p>
             </>
           ) : (
-            <p className="text-sm font-semibold">R${+product.basePrice},00</p>
+            <p className="text-sm font-semibold md:text-lg">
+              R${+product.basePrice},00
+            </p>
           )}
         </div>
         <div className="flex items-center gap-1">

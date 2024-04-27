@@ -24,11 +24,20 @@ import {
   MenuIcon,
   PercentIcon,
   ShoppingCartIcon,
+  UserIcon,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ButtonMenu from "./ButtonMenu/ButtonMenu";
 import { Badge } from "@/components/ui/badge";
 import Cart from "../Cart/cart";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function Header() {
   const { products } = useContext(CartContext);
@@ -64,7 +73,7 @@ export default function Header() {
       }}
     >
       <Sheet>
-        <SheetTrigger asChild>
+        <SheetTrigger asChild className=" md:hidden md:flex-none">
           <Button size="icon" variant="outline">
             <MenuIcon size={21} />
           </Button>
@@ -145,33 +154,81 @@ export default function Header() {
       >
         Tech Store
       </h1>
+      <nav className="hidden flex-none items-center gap-2 md:flex">
+        <button
+          onClick={() => handleRouterClick("/")}
+          className="flex items-center gap-1 transition-all duration-300 hover:text-[#5033C3]"
+        >
+          <HomeIcon size={16} />
+          <p>Início</p>
+        </button>
+        <p className="opacity-40">|</p>
 
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button size="icon" variant="outline">
+        <button
+          onClick={() => handleRouterClick("/catalog")}
+          className="flex items-center gap-1 transition-all duration-300 hover:text-[#5033C3]"
+        >
+          <ListOrderedIcon size={16} />
+          <p>Catálogo</p>
+        </button>
+        <p className="opacity-40">|</p>
+        <button
+          onClick={() => handleRouterClick("/offers")}
+          className="flex items-center gap-1 transition-all duration-300 hover:text-[#5033C3]"
+        >
+          <PercentIcon size={16} />
+          Ofertas
+        </button>
+      </nav>
+
+      <div className="flex gap-1">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button className="bg-transparent border-2 border-secondary">
+              <UserIcon />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="mr-10 w-56">
+            {status === "authenticated" && (
+              <DropdownMenuLabel>Olá, {data?.user?.name}!</DropdownMenuLabel>
+            )}
+            <DropdownMenuSeparator />
+
+            <DropdownMenuCheckboxItem className="cursor-pointer p-2">
+              {status === "authenticated" ? (
+                <p onClick={handleLogoutClick}>Sair da Conta</p>
+              ) : (
+                <p onClick={handleLoginClick}>Login</p>
+              )}
+            </DropdownMenuCheckboxItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <Sheet>
+          <SheetTrigger className="rounded border border-secondary p-2 transition-all duration-300 hover:bg-accent">
             <ShoppingCartIcon size={21} />
             {sumProductsInCart > 0 && (
-              <p className="absolute right-6 top-4 rounded-full bg-[#5033C3] px-[0.2rem]">
+              <p className="absolute right-4 top-3 rounded-full bg-[#5033C3] px-[0.2rem]">
                 {sumProductsInCart}
               </p>
             )}
-          </Button>
-        </SheetTrigger>
-        <SheetContent className="w-full overflow-y-scroll p-0 pt-[1.3rem] [&::-webkit-scrollbar]:hidden">
-          <SheetHeader className="w-full border-b pb-3 pl-3">
-            <SheetTitle>
-              <Badge
-                className="flex w-fit gap-1 border-2 border-primary"
-                variant="outline"
-              >
-                <ShoppingCartIcon />
-                <p className="text-sm">Carrinho</p>
-              </Badge>
-            </SheetTitle>
-          </SheetHeader>
-          <Cart />
-        </SheetContent>
-      </Sheet>
+          </SheetTrigger>
+
+          <SheetContent className="w-full overflow-y-scroll p-0 pt-[1.3rem] [&::-webkit-scrollbar]:hidden">
+            <SheetHeader className="w-full border-b pb-3 pl-3">
+              <SheetTitle>
+                <Badge
+                  className="flex w-fit gap-1 border-2 border-primary"
+                  variant="outline"
+                >
+                  <ShoppingCartIcon />
+                  <p className="text-sm">Carrinho</p>
+                </Badge>
+              </SheetTitle>
+            </SheetHeader>
+            <Cart />
+          </SheetContent>
+        </Sheet>
+      </div>
     </header>
   );
 }

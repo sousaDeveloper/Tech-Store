@@ -42,7 +42,7 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     setProducts(
-      JSON.parse(localStorage.getItem("@fsw-store/cart-products") || "[]"),
+      JSON.parse(localStorage.getItem("cart-products") || "[]"),
     );
   }, []);
 
@@ -68,7 +68,10 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
   // Total com descontos
   const total = useMemo(() => {
     return products.reduce((acc, product) => {
-      return acc + product.totalPrice * product.quantity;
+      if (product.discountPercentage <= 0) {
+        return product.discountPercentage = 0
+      }
+      return acc + product.totalPrice * product.quantity
     }, 0);
   }, [products]);
 
