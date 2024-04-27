@@ -194,12 +194,15 @@ export default function Header() {
             )}
             <DropdownMenuSeparator />
 
-            <DropdownMenuCheckboxItem className="cursor-pointer p-2">
-              {status === "authenticated" ? (
-                <p onClick={handleLogoutClick}>Sair da Conta</p>
-              ) : (
-                <p onClick={handleLoginClick}>Login</p>
-              )}
+            <DropdownMenuCheckboxItem
+              className="cursor-pointer p-2"
+              onClick={
+                status === "authenticated"
+                  ? handleLogoutClick
+                  : handleLoginClick
+              }
+            >
+              {status === "authenticated" ? <p>Sair da Conta</p> : <p>Login</p>}
             </DropdownMenuCheckboxItem>
           </DropdownMenuContent>
         </DropdownMenu>

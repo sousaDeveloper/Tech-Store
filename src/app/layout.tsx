@@ -38,6 +38,7 @@ export default function RootLayout({
           href="https://unpkg.com/aos@2.3.1/dist/aos.css"
           rel="stylesheet"
         />
+        <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <title>Tech Store</title>
       </head>
