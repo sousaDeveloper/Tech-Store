@@ -119,14 +119,14 @@ export default function Header() {
             <SheetClose>
               <ButtonMenu onClick={() => handleRouterClick("/")}>
                 <HomeIcon size={16} />
-                <p>Início</p>
+                Início
               </ButtonMenu>
             </SheetClose>
 
             <SheetClose>
               <ButtonMenu onClick={() => handleRouterClick("/catalog")}>
                 <ListOrderedIcon size={16} />
-                <p>Catálogo</p>
+                Catálogo
               </ButtonMenu>
             </SheetClose>
 
@@ -160,7 +160,7 @@ export default function Header() {
           className="flex items-center gap-1 transition-all duration-300 hover:text-[#5033C3]"
         >
           <HomeIcon size={16} />
-          <p>Início</p>
+          Início
         </button>
         <p className="opacity-40">|</p>
 
@@ -169,7 +169,7 @@ export default function Header() {
           className="flex items-center gap-1 transition-all duration-300 hover:text-[#5033C3]"
         >
           <ListOrderedIcon size={16} />
-          <p>Catálogo</p>
+          Catálogo
         </button>
         <p className="opacity-40">|</p>
         <button
@@ -184,9 +184,15 @@ export default function Header() {
       <div className="flex gap-1">
         <DropdownMenu>
           <DropdownMenuTrigger asChild className="hidden flex-none md:flex">
-            <Button className="border-2 border-secondary bg-[#0b0b0b]">
-              <UserIcon />
-            </Button>
+            {status === "unauthenticated" ? (
+              <Button className="border-2 border-secondary bg-[#0b0b0b]">
+                <UserIcon />
+              </Button>
+            ) : (
+              <Avatar className="cursor-pointer">
+                {data?.user?.image && <AvatarImage src={data?.user?.image} />}
+              </Avatar>
+            )}
           </DropdownMenuTrigger>
           <DropdownMenuContent className="mr-10 w-56">
             {status === "authenticated" && (
