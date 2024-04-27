@@ -3,6 +3,7 @@
 import { ReactNode, createContext, useEffect, useMemo, useState } from "react";
 
 import { ProductWithTotalPrice } from "@/helpers/product";
+import safeLocalStorage from "@/helpers/local-storage";
 export interface CartProduct extends ProductWithTotalPrice {
   quantity: number;
 }
@@ -38,16 +39,12 @@ export const CartContext = createContext<ICartContext>({
 });
 
 const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [products, setProducts] = useState<CartProduct[]>([])
+  const [products, setProducts] = useState<CartProduct[]>(
+    JSON.parse(safeLocalStorage()?.getItem("cart-products") || "[]"),
+  );
 
   useEffect(() => {
-    setProducts(
-      JSON.parse(localStorage.getItem("cart-products") || "[]"),
-    );
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("cart-products", JSON.stringify(products))
+    safeLocalStorage()?.setItem("cart-products", JSON.stringify(products));
   }, [products]);
 
   const subtotal = useMemo(() => {
@@ -69,9 +66,9 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
   const total = useMemo(() => {
     return products.reduce((acc, product) => {
       if (product.discountPercentage <= 0) {
-        return product.discountPercentage = 0
+        return (product.discountPercentage = 0);
       }
-      return acc + product.totalPrice * product.quantity
+      return acc + product.totalPrice * product.quantity;
     }, 0);
   }, [products]);
 
@@ -96,8 +93,8 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const clearCart = () => {
-    return setProducts([])
-  }
+    return setProducts([]);
+  };
 
   const addProductToCart = (product: CartProduct) => {
     const productIsAlreadyOnCart = products.some(
