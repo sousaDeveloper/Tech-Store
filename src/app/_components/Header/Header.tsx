@@ -183,8 +183,8 @@ export default function Header() {
 
       <div className="flex gap-1">
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button className="bg-transparent border-2 border-secondary">
+          <DropdownMenuTrigger asChild className="hidden flex-none md:flex">
+            <Button className="border-2 border-secondary bg-[#0b0b0b]">
               <UserIcon />
             </Button>
           </DropdownMenuTrigger>
@@ -204,7 +204,7 @@ export default function Header() {
           </DropdownMenuContent>
         </DropdownMenu>
         <Sheet>
-          <SheetTrigger className="rounded border border-secondary p-2 transition-all duration-300 hover:bg-accent">
+          <SheetTrigger className="rounded border border-secondary bg-[#0b0b0b] p-2 transition-all duration-300 hover:bg-[#5033C3]">
             <ShoppingCartIcon size={21} />
             {sumProductsInCart > 0 && (
               <p className="absolute right-4 top-3 rounded-full bg-[#5033C3] px-[0.2rem]">

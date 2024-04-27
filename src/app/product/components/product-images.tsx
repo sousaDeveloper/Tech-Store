@@ -19,8 +19,8 @@ const ProductImages = ({ name, imageUrls }: ProductImagesProps) => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex h-[380px] w-full items-center justify-center bg-accent">
-        <div className="absolute left-[0.05rem] top-20 p-5 pb-0">
+      <div className="flex h-[380px] w-full items-center justify-center bg-accent md:h-full md:rounded">
+        <div className="absolute left-[0.05rem] top-20 p-5 pb-0 md:top-[5.75rem]">
           <ButtonBack />
         </div>
         <Image
@@ -30,13 +30,14 @@ const ProductImages = ({ name, imageUrls }: ProductImagesProps) => {
           height={0}
           sizes="100vw"
           className="h-auto max-h-[70%] w-auto max-w-[80%]"
+          data-aos="fade-up"
           style={{
             objectFit: "contain",
           }}
         />
       </div>
       <div
-        className="mt-8 grid grid-cols-4 gap-4 px-5"
+        className="mt-8 grid grid-cols-4 gap-4 px-5 md:absolute md:flex md:flex-col "
         data-aos="fade-down"
         data-aos-duration="1000"
       >
@@ -44,7 +45,7 @@ const ProductImages = ({ name, imageUrls }: ProductImagesProps) => {
           <button
             key={index}
             onClick={() => handleImageClick(imageUrl)}
-            className={`flex h-20 cursor-pointer items-center justify-center rounded-lg bg-accent ${currentImage === imageUrl && "border-2 border-primary"}`}
+            className={`flex h-20 cursor-pointer items-center justify-center rounded-lg bg-accent ${currentImage === imageUrl && "border-2 border-primary"} md:bg-[#0b0b0b]`}
           >
             <Image
               src={imageUrl}

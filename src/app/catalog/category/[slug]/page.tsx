@@ -29,7 +29,7 @@ export default async function CategoryProducts({ params }: any) {
         </Badge>
       </div>
 
-      <div className="mt-3 flex flex-wrap justify-center gap-8">
+      <div className="mt-3 flex flex-wrap justify-center gap-8 md:grid md:grid-cols-3 md:place-items-center">
         {products.map((product) => (
           <ProductItem
             product={computeProductTotalPrice(product)}

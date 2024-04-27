@@ -51,7 +51,11 @@ export default function ProductInfo({ product }: ProductInfoProps) {
   );
 
   return (
-    <div className="p-5 pb-1" data-aos="fade-right" data-aos-duration="1000">
+    <div
+      className="p-5 pb-1 md:rounded md:bg-accent md:p-5"
+      data-aos="fade-right"
+      data-aos-duration="1000"
+    >
       <p className="text-sm text-gray-400">Novo | 100 vendidos</p>
       <p className="text-lg">{product.name}</p>
       <p className="text-primary">Disponível em estoque</p>
@@ -117,11 +121,11 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           ADICIONAR AO CARRINHO
         </Button>
         <div
-          className="mt-4 flex items-center justify-between rounded-lg bg-accent px-4 py-2"
+          className="mt-4 flex items-center justify-between rounded-lg bg-accent px-4 py-2 md:bg-[#0b0b0b]"
           data-aos="fade-up"
           data-aos-duration="1000"
         >
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 ">
             <TruckIcon size={25} />
             <div className="flex flex-col">
               <p className="text-sm">
@@ -134,9 +138,6 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           </div>
           <p className="text-xs font-semibold">Frete Grátis</p>
         </div>
-      </div>
-      <div className="mt-10">
-        <p className="font-semibold uppercase">Recomendados</p>
       </div>
     </div>
   );

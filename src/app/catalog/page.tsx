@@ -25,7 +25,7 @@ export default async function CatalogPage() {
       </div>
 
       <div
-        className="mt-6 flex flex-wrap justify-center gap-8"
+        className="mt-6 flex flex-wrap justify-center gap-8 md:grid md:grid-cols-3 md:place-items-center"
         data-aos="fade-up"
         data-aos-duration="1000"
       >

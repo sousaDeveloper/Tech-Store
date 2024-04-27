@@ -23,9 +23,10 @@ export default async function OffersPage() {
         </Badge>
       </div>
 
-      <div className="mt-5">
+      <div className="mt-5 flex items-center px-24">
         <ProductList
           products={deals}
+          basis="xl:basis-[20%] md:basis-[25%]"
           className="flex flex-wrap justify-center gap-8"
         />
       </div>

@@ -37,13 +37,24 @@ export default async function ProductDetailsPage({
 
   return (
     <div>
-      <div className="mt-[5rem] h-full">
-        <ProductImages imageUrls={product.imageUrls} name={product.name} />
-        <ProductInfo product={computeProductTotalPrice(product)} />
-        <div className="px-5">
+      <div className="mt-[5rem] h-full md:mt-[7rem] md:px-24">
+        <div className="hidden flex-none md:grid md:grid-cols-2 md:gap-4">
+          <ProductImages imageUrls={product.imageUrls} name={product.name} />
+          <ProductInfo product={computeProductTotalPrice(product)} />
+        </div>
+
+        <div className="md:hidden md:flex-none">
+          <ProductImages imageUrls={product.imageUrls} name={product.name} />
+          <ProductInfo product={computeProductTotalPrice(product)} />
+        </div>
+
+        <div className="px-5 md:px-0">
+          <p className="mt-10 text-lg uppercase">Recomendados</p>
           <ProductList
             products={product.category.products}
-            className="flex gap-2 overflow-y-auto [&::-webkit-scrollbar]:hidden"
+            basis="md:basis-[25%]"
+            buttonShow="flex-none hidden"
+            className="flex justify-center gap-2 overflow-y-auto [&::-webkit-scrollbar]:hidden"
           />
         </div>
       </div>
