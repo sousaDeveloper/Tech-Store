@@ -8,7 +8,7 @@ export default function BannerHome({ src, alt, className, sizes }: ImageProps) {
       height={0}
       alt={alt}
       sizes={sizes}
-      className={`${className} mt-5 h-auto w-full md:mt-[5rem]`}
+      className={`${className} mt-4 h-auto w-full`}
       data-aos="fade-down"
       data-aos-duration="1000"
     />

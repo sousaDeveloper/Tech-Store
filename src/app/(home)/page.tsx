@@ -31,7 +31,7 @@ export default async function Home() {
 
   return (
     <>
-      <main className="mt-14 p-5 md:p-0">
+      <main className="mt-[5.75rem] p-5 md:p-0">
         <BannerHome
           src="/banner-home-01.png"
           alt="Até 55% de desconto só esse mês!"
@@ -74,7 +74,7 @@ export default async function Home() {
         sizes="100vw"
       />
 
-      <div className="hidden flex-none md:grid md:grid-cols-2 md:place-items-start md:gap-4 md:px-24">
+      <div className="mt-5 hidden flex-none md:grid md:grid-cols-2 md:place-items-start md:gap-4 md:px-24">
         <BannerHome
           src="/banner-desktop-04.png"
           alt="Até 55% de desconto em Mouses!"
@@ -87,7 +87,7 @@ export default async function Home() {
         />
       </div>
 
-      <div className="mt-3 p-5 md:mt-14 md:px-24">
+      <div className="mt-5 p-5 md:px-24">
         <p
           className="mb-1 md:text-xl"
           data-aos="fade-right"
@@ -97,9 +97,9 @@ export default async function Home() {
         </p>
         <ProductList
           products={mouses}
-          className="flex w-full gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden"
-          buttonShow="flex-none hidden md:flex xl:hidden"
-          basis="md:basis-[25%] xl:basis-[20%]"
+          className="flex min-w-full gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden "
+          buttonShow="flex-none hidden md:flex"
+          basis="md:basis-[25%] xl:basis-[22%]"
         />
       </div>
 
@@ -117,7 +117,7 @@ export default async function Home() {
         className="hidden flex-none md:grid md:px-24"
       />
 
-      <div className="mt-5 p-5 md:mt-5 md:px-24">
+      <div className="mt-5 p-5 md:px-24">
         <p
           className="mb-1 md:text-xl"
           data-aos="fade-right"
@@ -128,8 +128,8 @@ export default async function Home() {
         <ProductList
           products={speakers}
           className="flex w-full gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden"
-          buttonShow="flex-none hidden md:flex xl:hidden"
-          basis="md:basis-[25%] xl:basis-[20%]"
+          buttonShow="flex-none hidden md:flex"
+          basis="md:basis-[25%] xl:basis-[22%]"
         />
       </div>
     </>
