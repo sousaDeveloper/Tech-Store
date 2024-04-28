@@ -27,7 +27,7 @@ import {
   UserIcon,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import ButtonMenu from "./ButtonMenu/ButtonMenu";
+import ButtonMenu from "./components/ButtonMenu";
 import { Badge } from "@/components/ui/badge";
 import Cart from "../Cart/cart";
 import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
@@ -155,6 +155,7 @@ export default function Header() {
       >
         Tech Store
       </h1>
+
       <nav className="hidden flex-none items-center gap-2 md:flex">
         <button
           onClick={() => handleRouterClick("/")}
@@ -194,9 +195,7 @@ export default function Header() {
                   </button>
                 ) : (
                   <Avatar className="cursor-pointer">
-                    {data?.user?.image && (
-                      <AvatarImage src={data?.user?.image} />
-                    )}
+                    <AvatarImage src={`${data?.user?.image}`} />
                   </Avatar>
                 )}
               </NavigationMenuTrigger>
@@ -251,7 +250,7 @@ export default function Header() {
           <SheetTrigger className="mt-[0.3rem] h-fit rounded border-2 border-secondary bg-[#0b0b0b] p-2 transition-all duration-300 hover:bg-accent">
             <ShoppingCartIcon size={21} />
             {sumProductsInCart > 0 && (
-              <p className="absolute right-9 top-3 rounded-full bg-[#5033C3] px-[0.2rem]">
+              <p className="absolute right-9 top-4 rounded-full bg-[#5033C3] px-[0.2rem]">
                 {sumProductsInCart}
               </p>
             )}
