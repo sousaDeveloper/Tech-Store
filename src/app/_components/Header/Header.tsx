@@ -30,14 +30,15 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ButtonMenu from "./ButtonMenu/ButtonMenu";
 import { Badge } from "@/components/ui/badge";
 import Cart from "../Cart/cart";
+import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 
 export default function Header() {
   const { products } = useContext(CartContext);
@@ -66,7 +67,7 @@ export default function Header() {
 
   return (
     <header
-      className="fixed top-0 z-50 flex w-full items-center justify-between border-b border-solid px-6 py-5"
+      className="fixed top-0 z-50 flex w-full items-center justify-between border-b border-solid px-10 py-5"
       style={{
         backdropFilter: "blur(0.5rem)",
         WebkitBackdropFilter: "blur(0.5rem)",
@@ -149,7 +150,7 @@ export default function Header() {
       </Sheet>
 
       <h1
-        className="bg-gradient-to-r from-[#5033C3] to-purple-600 bg-clip-text text-xl font-semibold text-transparent"
+        className="cursor-pointer bg-gradient-to-r from-[#5033C3] to-purple-600 bg-clip-text text-xl font-semibold text-transparent"
         onClick={() => handleRouterClick("/")}
       >
         Tech Store
@@ -182,41 +183,75 @@ export default function Header() {
       </nav>
 
       <div className="flex gap-1">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild className="hidden flex-none md:flex">
-            {status === "unauthenticated" ? (
-              <Button className="border-2 border-secondary bg-[#0b0b0b]">
-                <UserIcon />
-              </Button>
-            ) : (
-              <Avatar className="cursor-pointer">
-                {data?.user?.image && <AvatarImage src={data?.user?.image} />}
-              </Avatar>
-            )}
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="mr-10 w-56">
-            {status === "authenticated" && (
-              <DropdownMenuLabel>Olá, {data?.user?.name}!</DropdownMenuLabel>
-            )}
-            <DropdownMenuSeparator />
+        <NavigationMenu className="hidden flex-none md:flex">
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger className="mt-1 bg-transparent">
+                {" "}
+                {status === "unauthenticated" ? (
+                  <button className="rounded border-2 border-secondary bg-[#0b0b0b] p-2 hover:bg-accent">
+                    <UserIcon size={21} />
+                  </button>
+                ) : (
+                  <Avatar className="cursor-pointer">
+                    {data?.user?.image && (
+                      <AvatarImage src={data?.user?.image} />
+                    )}
+                  </Avatar>
+                )}
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <NavigationMenuLink>
+                  <div className="w-[10rem]">
+                    {status === "authenticated" ? (
+                      <>
+                        <p className="cursor-default p-2">
+                          Olá, {data?.user?.name?.split(" ")[0]}!
+                        </p>
+                        <DropdownMenuSeparator />
+                        <NavigationMenuItem className="cursor-pointer list-none p-2 hover:bg-accent">
+                          <p className="flex items-center gap-2">
+                            <ListOrderedIcon size={16} />
+                            Meus Pedidos
+                          </p>
+                        </NavigationMenuItem>
+                      </>
+                    ) : (
+                      <p className="p-2 text-sm">Olá, faça seu login!</p>
+                    )}
+                    <DropdownMenuSeparator />
+                    <NavigationMenuItem
+                      className="cursor-pointer list-none p-2  hover:bg-accent"
+                      onClick={
+                        status === "authenticated"
+                          ? handleLogoutClick
+                          : handleLoginClick
+                      }
+                    >
+                      {status === "authenticated" ? (
+                        <p className="flex items-center gap-2">
+                          <LogOutIcon size={18} />
+                          Sair da Conta
+                        </p>
+                      ) : (
+                        <p className="flex items-center gap-2">
+                          <LogInIcon size={18} />
+                          Login
+                        </p>
+                      )}
+                    </NavigationMenuItem>
+                  </div>
+                </NavigationMenuLink>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
 
-            <DropdownMenuCheckboxItem
-              className="cursor-pointer p-2"
-              onClick={
-                status === "authenticated"
-                  ? handleLogoutClick
-                  : handleLoginClick
-              }
-            >
-              {status === "authenticated" ? <p>Sair da Conta</p> : <p>Login</p>}
-            </DropdownMenuCheckboxItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
         <Sheet>
-          <SheetTrigger className="rounded border border-secondary bg-[#0b0b0b] p-2 transition-all duration-300 hover:bg-[#5033C3]">
+          <SheetTrigger className="mt-[0.3rem] h-fit rounded border-2 border-secondary bg-[#0b0b0b] p-2 transition-all duration-300 hover:bg-accent">
             <ShoppingCartIcon size={21} />
             {sumProductsInCart > 0 && (
-              <p className="absolute right-4 top-3 rounded-full bg-[#5033C3] px-[0.2rem]">
+              <p className="absolute right-9 top-3 rounded-full bg-[#5033C3] px-[0.2rem]">
                 {sumProductsInCart}
               </p>
             )}
