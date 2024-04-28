@@ -1,8 +1,8 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
-import { ArrowDown, StarIcon } from "lucide-react";
+import { ArrowDown, Loader, StarIcon } from "lucide-react";
 
 import { ProductWithTotalPrice } from "@/helpers/product";
 
@@ -15,9 +15,12 @@ interface ProductItemProps {
 
 export default function ProductItem({ product }: ProductItemProps) {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleRouterProcuctClick = () =>
-    router.push(`/product/${product.slug}`);
+  const handleRouterProcuctClick = () => {
+    setIsLoading(true);
+    return router.push(`/product/${product.slug}`);
+  };
 
   const productWithDiscount = +product.basePrice - product.totalPrice;
 
@@ -44,8 +47,11 @@ export default function ProductItem({ product }: ProductItemProps) {
           width={0}
           height={0}
           sizes="100vw"
-          className="relative h-[90px] w-auto object-contain"
+          className={`relative h-[90px] w-auto object-contain ${isLoading && "opacity-15"}`}
         />
+        {isLoading && (
+          <Loader className="absolute animate-spin text-[#5033C3]" size={25} />
+        )}
         {product.discountPercentage > 0 && (
           <Badge className="absolute left-0 top-0 m-2 flex items-center">
             <ArrowDown size={14} />
