@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import CartItem from "./cart-item";
 import createOrder from "@/actions/order";
 import { useSession } from "next-auth/react";
+import { toast } from "sonner";
 
 export default function Cart() {
   const { data } = useSession();
@@ -18,6 +19,7 @@ export default function Cart() {
     totalFormatted,
     subTotalFormatted,
     totalDiscountFormatted,
+    clearCart,
   } = useContext(CartContext);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -38,6 +40,11 @@ export default function Cart() {
     stripe?.redirectToCheckout({
       sessionId: checkout.id,
     });
+
+    if (order.status === "PAYMENT_CONFIRMED") {
+      toast("Pedido realizado");
+      return clearCart();
+    }
   };
 
   return (
