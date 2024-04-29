@@ -8,8 +8,11 @@ import createCheckout from "@/actions/checkout";
 
 import { Button } from "@/components/ui/button";
 import CartItem from "./cart-item";
+import createOrder from "@/actions/order";
+import { useSession } from "next-auth/react";
 
 export default function Cart() {
+  const { data } = useSession();
   const {
     products,
     totalFormatted,
@@ -21,6 +24,11 @@ export default function Cart() {
 
   const handleFinishPurchaseClick = async () => {
     setIsLoading(true);
+
+    if (!data?.user) {
+      return;
+    }
+    await createOrder(products, (data?.user as any).id);
 
     const checkout = await createCheckout(products);
 
