@@ -218,7 +218,10 @@ export default function Header() {
                           Olá, {data?.user?.name?.split(" ")[0]}!
                         </p>
                         <DropdownMenuSeparator />
-                        <NavigationMenuItem className="cursor-pointer list-none p-2 hover:bg-accent">
+                        <NavigationMenuItem
+                          className="cursor-pointer list-none p-2 hover:bg-accent"
+                          onClick={() => handleRouterClick("/orders")}
+                        >
                           <p className="flex items-center gap-2">
                             <ListOrderedIcon size={16} />
                             Meus Pedidos
