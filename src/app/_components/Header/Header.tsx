@@ -22,6 +22,7 @@ import {
   LogInIcon,
   LogOutIcon,
   MenuIcon,
+  PackageSearchIcon,
   PercentIcon,
   ShoppingCartIcon,
   UserIcon,
@@ -136,6 +137,15 @@ export default function Header() {
                 <PercentIcon size={16} />
                 Ofertas
               </ButtonMenu>
+            </SheetClose>
+
+            <SheetClose>
+              {status === "authenticated" && (
+                <ButtonMenu onClick={() => handleRouterClick("/orders")}>
+                  <PackageSearchIcon size={16} />
+                  Meus Pedidos
+                </ButtonMenu>
+              )}
             </SheetClose>
 
             {status === "authenticated" && (
