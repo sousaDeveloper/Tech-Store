@@ -15,8 +15,8 @@ export default async function createCheckout(
   const checkout = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     mode: "payment",
-    success_url: "http://localhost:3000",
-    cancel_url: "http://localhost:3000",
+    success_url: process.env.HOST_URL,
+    cancel_url: process.env.HOST_URL,
     metadata: {
       orderId,
     },
@@ -29,7 +29,7 @@ export default async function createCheckout(
             description: product.description,
             images: product.imageUrls,
           },
-          unit_amount: product.totalPrice * 100 - +product.basePrice,
+          unit_amount: product.totalPrice * 100,
         },
         quantity: product.quantity,
       };

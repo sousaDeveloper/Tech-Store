@@ -7,5 +7,6 @@ declare namespace NodeJS {
     STRIPE_SECRET_KEY: string;
     STRIPE_WEBHOOK_SECRET_KEY: string;
     NEXT_PUBLIC_SECRET: any;
+    HOST_URL: string
   }
 }
