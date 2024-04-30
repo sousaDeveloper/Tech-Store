@@ -59,7 +59,7 @@ export default function CartItem({ product }: CartItemProps) {
       data-aos-duration="1000"
     >
       <div className="flex gap-2">
-        <div className="h-24 rounded-lg bg-accent p-4 w-full">
+        <div className="h-24 w-full rounded-lg bg-accent p-4">
           <Image
             src={product.imageUrls[0]}
             alt={product.name}

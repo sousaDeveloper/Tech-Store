@@ -1,11 +1,14 @@
-import { Badge } from "@/components/ui/badge";
-import { prismaClient } from "@/lib/prisma";
-import { ShoppingBasket } from "lucide-react";
 import { getServerSession } from "next-auth";
+import { ShoppingBasket } from "lucide-react";
+
+import { authOptions } from "@/lib/auth";
+import { prismaClient } from "@/lib/prisma";
+
+import { Badge } from "@/components/ui/badge";
 import OrderItem from "./components/order-item";
 
 const ordersPage = async () => {
-  const user = getServerSession();
+  const user = getServerSession(authOptions);
 
   if (!user) {
     return <p>Access Denied!</p>;
@@ -16,7 +19,11 @@ const ordersPage = async () => {
       userId: (user as any).id,
     },
     include: {
-      orderProducts: true,
+      orderProducts: {
+        include: {
+          product: true,
+        },
+      },
     },
   });
 

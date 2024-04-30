@@ -1,4 +1,10 @@
+"use client";
+
+import { useMemo } from "react";
 import { format } from "date-fns";
+
+import { Prisma } from "@prisma/client";
+import computeProductTotalPrice from "@/helpers/product";
 
 import {
   Accordion,
@@ -7,18 +13,38 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Card } from "@/components/ui/card";
-import { Prisma } from "@prisma/client";
+import OrderProductItem from "./order-product-item";
 
 interface OrderItemProps {
   order: Prisma.OrderGetPayload<{
     include: {
-      orderProducts: true;
+      orderProducts: {
+        include: { product: true };
+      };
     };
   }>;
   numberOrder: number;
 }
 
 const OrderItem = ({ order, numberOrder }: OrderItemProps) => {
+  const subtotal = useMemo(() => {
+    return order.orderProducts.reduce((accum, orderProduct) => {
+      return accum + +orderProduct.product.basePrice * orderProduct.quantity;
+    }, 0);
+  }, [order.orderProducts]);
+
+  const total = useMemo(() => {
+    return order.orderProducts.reduce((acc, product) => {
+      const productWithDiscount = computeProductTotalPrice(product.product);
+      if (product.discountPercentage === 0) {
+        return 0;
+      }
+      return acc + +productWithDiscount.totalPrice * product.quantity;
+    }, 0);
+  }, [order.orderProducts]);
+
+  const totalDiscount = subtotal - total;
+
   return (
     <Card>
       <Accordion type="single" className="w-full" collapsible>
@@ -52,6 +78,40 @@ const OrderItem = ({ order, numberOrder }: OrderItemProps) => {
               </div>
             </div>
             <hr />
+
+            {order.orderProducts.map((orderProduct) => (
+              <OrderProductItem
+                orderProduct={orderProduct}
+                key={orderProduct.id}
+              />
+            ))}
+
+            <div
+              className="flex flex-col"
+              data-aos="fade-up"
+              data-aos-duration="1000"
+            >
+              <hr />
+              <div className="flex justify-between px-1 py-3">
+                <p>Subtotal</p>
+                <p className="opacity-80">R$ {subtotal},00</p>
+              </div>
+              <hr />
+              <div className="flex justify-between px-1 py-3">
+                <p>Entrega</p>
+                <p className="opacity-80">GRÁTIS</p>
+              </div>
+              <hr />
+              <div className="flex justify-between px-1 py-3">
+                <p>Descontos</p>
+                <p className="opacity-80">- R$ {total},00</p>
+              </div>
+              <hr />
+              <div className="flex justify-between px-1 py-3">
+                <p className="font-semibold">Total</p>
+                <p className="font-semibold">R$ {totalDiscount},00</p>
+              </div>
+            </div>
           </AccordionContent>
         </AccordionItem>
       </Accordion>
