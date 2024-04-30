@@ -13,9 +13,9 @@ interface ICartContext {
   cartTotalPrice: number;
   cartBasePrice: number;
   cartTotalDiscount: number;
-  totalFormatted: string;
-  subTotalFormatted: string;
-  totalDiscountFormatted: string;
+  total: number;
+  subtotal: number;
+  totalDiscount: number;
   clearCart: () => void;
   addProductToCart: (product: CartProduct) => void;
   decreaseProductQuantity: (productId: string) => void;
@@ -28,9 +28,9 @@ export const CartContext = createContext<ICartContext>({
   cartTotalPrice: 0,
   cartBasePrice: 0,
   cartTotalDiscount: 0,
-  totalFormatted: "",
-  subTotalFormatted: "",
-  totalDiscountFormatted: "",
+  total: 0,
+  subtotal: 0,
+  totalDiscount: 0,
   clearCart: () => {},
   addProductToCart: () => {},
   decreaseProductQuantity: () => {},
@@ -47,50 +47,21 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
     safeLocalStorage()?.setItem("cart-products", JSON.stringify(products));
   }, [products]);
 
+  // Total sem descontos
   const subtotal = useMemo(() => {
     return products.reduce((acc, product) => {
       return acc + Number(product.basePrice) * product.quantity;
     }, 0);
   }, [products]);
 
-  const subTotalFormatted = useMemo(
-    () =>
-      Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(subtotal),
-    [subtotal],
-  );
-
   // Total com descontos
   const total = useMemo(() => {
     return products.reduce((acc, product) => {
-      if (product.discountPercentage <= 0) {
-        return (product.discountPercentage = 0);
-      }
       return acc + product.totalPrice * product.quantity;
     }, 0);
   }, [products]);
 
-  const totalFormatted = useMemo(
-    () =>
-      Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(total),
-    [total],
-  );
-
   const totalDiscount = subtotal - total;
-
-  const totalDiscountFormatted = useMemo(
-    () =>
-      Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(totalDiscount),
-    [totalDiscount],
-  );
 
   const clearCart = () => {
     return setProducts([]);
@@ -168,9 +139,9 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
         decreaseProductQuantity,
         increaseProductQuantity,
         removeProductFromCart,
-        totalFormatted,
-        subTotalFormatted,
-        totalDiscountFormatted,
+        total,
+        subtotal,
+        totalDiscount,
         cartTotalPrice: 0,
         cartBasePrice: 0,
         cartTotalDiscount: 0,

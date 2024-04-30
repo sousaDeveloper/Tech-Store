@@ -1,26 +1,21 @@
+import { toast } from "sonner";
 import { useContext, useState } from "react";
 import { Loader2Icon } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 import { CartContext } from "@/providers/cart";
 import computeProductTotalPrice from "@/helpers/product";
 import { loadStripe } from "@stripe/stripe-js";
 import createCheckout from "@/actions/checkout";
+import createOrder from "@/actions/order";
 
 import { Button } from "@/components/ui/button";
 import CartItem from "./cart-item";
-import createOrder from "@/actions/order";
-import { useSession } from "next-auth/react";
-import { toast } from "sonner";
 
 export default function Cart() {
   const { data } = useSession();
-  const {
-    products,
-    totalFormatted,
-    subTotalFormatted,
-    totalDiscountFormatted,
-    clearCart,
-  } = useContext(CartContext);
+  const { products, total, subtotal, totalDiscount, clearCart } =
+    useContext(CartContext);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -70,7 +65,7 @@ export default function Cart() {
               <hr />
               <div className="flex justify-between px-1 py-3">
                 <p>Subtotal</p>
-                <p className="opacity-80">{subTotalFormatted}</p>
+                <p className="opacity-80">R$ {subtotal.toFixed(2)}</p>
               </div>
               <hr />
               <div className="flex justify-between px-1 py-3">
@@ -80,12 +75,12 @@ export default function Cart() {
               <hr />
               <div className="flex justify-between px-1 py-3">
                 <p>Descontos</p>
-                <p className="opacity-80">- {totalFormatted}</p>
+                <p className="opacity-80">- R$ {total.toFixed(2)}</p>
               </div>
               <hr />
               <div className="flex justify-between px-1 py-3">
                 <p className="font-semibold">Total</p>
-                <p className="font-semibold">{totalDiscountFormatted}</p>
+                <p className="font-semibold">R$ {totalDiscount.toFixed(2)}</p>
               </div>
               <Button
                 className="flex items-center gap-1"

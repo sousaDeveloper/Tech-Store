@@ -54,7 +54,7 @@ export default async function ProductDetailsPage({
             products={product.category.products}
             basis="md:basis-[25%]"
             buttonShow="flex-none hidden"
-            className="flex justify-center gap-2 overflow-y-auto [&::-webkit-scrollbar]:hidden"
+            className="flex gap-2 overflow-y-auto [&::-webkit-scrollbar]:hidden"
           />
         </div>
       </div>
