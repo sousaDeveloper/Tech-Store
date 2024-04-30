@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useContext, useState } from "react";
 import { Loader2Icon } from "lucide-react";
@@ -19,26 +20,30 @@ export default function Cart() {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const router = useRouter();
+
   const handleFinishPurchaseClick = async () => {
     setIsLoading(true);
 
     if (!data?.user) {
-      return;
-    }
+      toast("Primeiro faça seu login.");
+      router.push("/");
+    } else {
+      const order = await createOrder(products, (data?.user as any).id);
 
-    const order = await createOrder(products, (data?.user as any).id);
+      const checkout = await createCheckout(products, order.id);
+      const stripe = await loadStripe(
+        process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY,
+      );
 
-    const checkout = await createCheckout(products, order.id);
+      stripe?.redirectToCheckout({
+        sessionId: checkout.id,
+      });
 
-    const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
-
-    stripe?.redirectToCheckout({
-      sessionId: checkout.id,
-    });
-
-    if (order.status === "PAYMENT_CONFIRMED") {
-      toast("Pedido realizado");
-      return clearCart();
+      if (order.status === "PAYMENT_CONFIRMED") {
+        toast("Pedido realizado");
+        return clearCart();
+      }
     }
   };
 
