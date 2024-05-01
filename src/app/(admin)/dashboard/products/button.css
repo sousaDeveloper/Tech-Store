@@ -1,0 +1,9 @@
+.buttonShadow {
+  box-shadow: 4px 4px #707070;
+}
+
+.buttonShadow:hover {
+  background: #2d1d6e;
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px #868686;
+}
