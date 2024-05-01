@@ -62,7 +62,7 @@ export default async function Home() {
         </p>
         <ProductList
           products={deals}
-          className="flex w-full gap-4 overflow-x-auto md:mt-3 md:flex-wrap md:overflow-visible [&::-webkit-scrollbar]:hidden"
+          className="flex w-full gap-4 overflow-y-auto md:mt-3 md:flex-wrap md:overflow-visible [&::-webkit-scrollbar]:hidden"
           basis="md:basis-[25%] xl:basis-[18%]"
         />
       </div>
@@ -97,7 +97,7 @@ export default async function Home() {
         </p>
         <ProductList
           products={mouses}
-          className="flex min-w-full gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden "
+          className="flex min-w-full gap-4 overflow-y-auto [&::-webkit-scrollbar]:hidden "
           buttonShow="flex-none hidden md:flex"
           basis="md:basis-[25%] xl:basis-[22%]"
         />
@@ -127,7 +127,7 @@ export default async function Home() {
         </p>
         <ProductList
           products={speakers}
-          className="flex w-full gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden"
+          className="flex w-full gap-4 overflow-y-auto [&::-webkit-scrollbar]:hidden"
           buttonShow="flex-none hidden md:flex"
           basis="md:basis-[25%] xl:basis-[22%]"
         />
