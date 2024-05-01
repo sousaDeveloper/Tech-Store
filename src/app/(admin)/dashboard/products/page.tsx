@@ -4,9 +4,15 @@ import { prismaClient } from "@/lib/prisma";
 import { PackageIcon, PlusIcon } from "lucide-react";
 
 import "./button.css";
+import computeProductTotalPrice from "@/helpers/product";
+import ProductTable from "./components/product-table";
 
 const ProductsPage = async () => {
   const products = await prismaClient.product.findMany({});
+
+  const productWithTotalPrice = products.map((product) =>
+    computeProductTotalPrice(product),
+  );
 
   return (
     <div className="flex w-full flex-col gap-10 p-8">
@@ -22,6 +28,7 @@ const ProductsPage = async () => {
           Adicionar produto
         </Button>
       </div>
+      <ProductTable products={productWithTotalPrice} />
     </div>
   );
 };
