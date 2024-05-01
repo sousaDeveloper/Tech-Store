@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 
-import ButtonBack from "@/app/catalog/components/button-back";
+import ButtonBack from "@/app/(shop)/catalog/components/button-back";
 
 interface ProductImagesProps {
   name: string;

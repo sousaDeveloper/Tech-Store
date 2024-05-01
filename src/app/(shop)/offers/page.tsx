@@ -1,7 +1,7 @@
 import { prismaClient } from "@/lib/prisma";
 
 import { Badge } from "@/components/ui/badge";
-import ProductList from "../_components/product-list";
+import ProductList from "../../_components/product-list";
 import ButtonBack from "../catalog/components/button-back";
 
 export default async function OffersPage() {
@@ -23,11 +23,11 @@ export default async function OffersPage() {
         </Badge>
       </div>
 
-      <div className="mt-5 flex items-center px-24">
+      <div className="mt-5 flex items-center px-1 md:px-24">
         <ProductList
           products={deals}
           basis="xl:basis-[20%] md:basis-[25%]"
-          className="flex flex-wrap justify-center gap-8"
+          className="grid grid-cols-2 place-content-center gap-10"
         />
       </div>
     </div>

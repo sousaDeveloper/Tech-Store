@@ -4,13 +4,9 @@
 import { Sora } from "next/font/google";
 
 import { AuthProvider } from "@/providers/auth";
-import CartContextProvider from "@/providers/cart";
+import Footer from "../(shop)/home/components/footer";
 
-import { Toaster } from "@/components/ui/sonner";
-import Header from "./_components/Header/Header";
-import Footer from "./(home)/components/footer";
-
-import "./globals.css";
+import "../globals.css";
 import { useEffect } from "react";
 import Aos from "aos";
 
@@ -45,12 +41,8 @@ export default function RootLayout({
       <body className={sora.className}>
         <div className="flex h-full flex-col">
           <AuthProvider>
-            <CartContextProvider>
-              <Header />
-              <div className="flex-1">{children}</div>
-              <Toaster />
-              <Footer />
-            </CartContextProvider>
+            <div className="flex-1">{children}</div>
+            <Footer />
           </AuthProvider>
         </div>
       </body>
