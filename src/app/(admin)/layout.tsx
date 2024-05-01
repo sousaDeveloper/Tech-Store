@@ -9,6 +9,7 @@ import Footer from "../(shop)/home/components/footer";
 import "../globals.css";
 import { useEffect } from "react";
 import Aos from "aos";
+import Sidebar from "./dashboard/components/sidebar";
 
 const sora = Sora({
   weight: "400",
@@ -41,7 +42,13 @@ export default function RootLayout({
       <body className={sora.className}>
         <div className="flex h-full flex-col">
           <AuthProvider>
-            <div className="flex-1">{children}</div>
+            <div className="flex-1">
+              <div className="flex">
+                {" "}
+                <Sidebar />
+                {children}
+              </div>
+            </div>
             <Footer />
           </AuthProvider>
         </div>
