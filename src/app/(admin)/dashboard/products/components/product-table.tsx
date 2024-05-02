@@ -42,7 +42,7 @@ const ProductTable = ({ products }: ProductTableProps) => {
             )}
             <TableCell>R$ {+product.totalPrice},00</TableCell>
 
-            <TableCell className="text-right">1</TableCell>
+            <TableCell>1</TableCell>
           </TableRow>
         ))}
       </TableBody>

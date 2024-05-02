@@ -3,20 +3,27 @@
 import {
   LayoutDashboardIcon,
   ListOrderedIcon,
+  Loader,
   PackageIcon,
   PackageSearchIcon,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 const Sidebar = () => {
-  const path = usePathname();
+  const [isLoading, setIsLoading] = useState(false);
 
+  const path = usePathname();
   const router = useRouter();
 
   const handleRouterClick = (pathName: string) => {
-    return router.push(pathName);
+    setIsLoading(true);
+    router.push(pathName);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
   };
 
   return (
@@ -41,6 +48,7 @@ const Sidebar = () => {
         >
           <PackageIcon size={16} />
           Produtos
+          {isLoading && <Loader className="animate-spin" />}
         </Button>
         <Button
           variant="outline"
