@@ -42,14 +42,11 @@ export default function RootLayout({
       <body className={sora.className}>
         <div className="flex h-full flex-col">
           <AuthProvider>
-            <div className="flex-1">
-              <div className="flex">
-                {" "}
-                <Sidebar />
-                {children}
-              </div>
+            <div className="flex overflow-hidden">
+              {" "}
+              <Sidebar />
+              {children}
             </div>
-            <Footer />
           </AuthProvider>
         </div>
       </body>
