@@ -5,20 +5,14 @@ export interface ProductWithTotalPrice extends Product {
 }
 
 export default function computeProductTotalPrice(
-  product: Product,
-): ProductWithTotalPrice {
+  product: Pick<Product, "discountPercentage" | "basePrice">,
+): number {
   if (product.discountPercentage === 0) {
-    return {
-      ...product,
-      totalPrice: +product.basePrice,
-    };
+    return +product.basePrice;
   }
 
-  const totalPrice =
+  const totalDiscount =
     (Number(product.basePrice) * product.discountPercentage) / 100;
 
-  return {
-    ...product,
-    totalPrice,
-  };
+  return +product.basePrice - totalDiscount;
 }

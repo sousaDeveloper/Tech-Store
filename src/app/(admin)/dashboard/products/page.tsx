@@ -24,8 +24,8 @@ const ProductsPage = async () => {
 
   const productWithTotalPrice: ProductWithTotalPriceAndCategory[] =
     products.map((product) => ({
-      ...computeProductTotalPrice(product),
-      category: product.category,
+      ...product,
+      totalPrice: computeProductTotalPrice(product),
     }));
 
   return (

@@ -35,11 +35,11 @@ const OrderItem = ({ order, numberOrder }: OrderItemProps) => {
 
   const total = useMemo(() => {
     return order.orderProducts.reduce((acc, product) => {
-      const productWithDiscount = computeProductTotalPrice(product.product);
+      const productTotalPrice = computeProductTotalPrice(product.product);
       if (product.discountPercentage === 0) {
         return 0;
       }
-      return acc + +productWithDiscount.totalPrice * product.quantity;
+      return acc + productTotalPrice * product.quantity;
     }, 0);
   }, [order.orderProducts]);
 

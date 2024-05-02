@@ -38,11 +38,9 @@ const ProductTable = ({ products }: ProductTableProps) => {
             {product.discountPercentage === 0 ? (
               <TableCell>R$ {+product.basePrice},00</TableCell>
             ) : (
-              <TableCell>
-                R$ {+product.basePrice - +product.totalPrice},00
-              </TableCell>
+              <TableCell>R$ {+product.basePrice},00</TableCell>
             )}
-            <TableCell>R$ {+product.basePrice},00</TableCell>
+            <TableCell>R$ {+product.totalPrice},00</TableCell>
 
             <TableCell className="text-right">1</TableCell>
           </TableRow>

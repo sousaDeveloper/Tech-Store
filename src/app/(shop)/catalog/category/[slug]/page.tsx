@@ -32,7 +32,10 @@ export default async function CategoryProducts({ params }: any) {
       <div className="mt-3 flex flex-wrap justify-center gap-8">
         {products.map((product) => (
           <ProductItem
-            product={computeProductTotalPrice(product)}
+            product={{
+              ...product,
+              totalPrice: computeProductTotalPrice(product),
+            }}
             key={product.id}
           />
         ))}

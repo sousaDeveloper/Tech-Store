@@ -40,12 +40,22 @@ export default async function ProductDetailsPage({
       <div className="mt-[5rem] h-full md:mt-[7rem] md:px-24">
         <div className="hidden flex-none md:grid md:grid-cols-2 md:gap-4">
           <ProductImages imageUrls={product.imageUrls} name={product.name} />
-          <ProductInfo product={computeProductTotalPrice(product)} />
+          <ProductInfo
+            product={{
+              ...product,
+              totalPrice: computeProductTotalPrice(product),
+            }}
+          />
         </div>
 
         <div className="md:hidden md:flex-none">
           <ProductImages imageUrls={product.imageUrls} name={product.name} />
-          <ProductInfo product={computeProductTotalPrice(product)} />
+          <ProductInfo
+            product={{
+              ...product,
+              totalPrice: computeProductTotalPrice(product),
+            }}
+          />
         </div>
 
         <div className="px-5 md:px-0">

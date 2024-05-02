@@ -14,7 +14,7 @@ interface OrderProductItemProps {
 }
 
 const OrderProductItem = ({ orderProduct }: OrderProductItemProps) => {
-  const productWithTotalPrice = computeProductTotalPrice(orderProduct.product);
+  const productTotalPrice = computeProductTotalPrice(orderProduct.product);
 
   return (
     <div className="flex w-full gap-2 py-5">
@@ -31,10 +31,10 @@ const OrderProductItem = ({ orderProduct }: OrderProductItemProps) => {
       <div className="flex flex-col gap-2">
         <p className="rounded-lg bg-accent px-3">Vendido e entre por: MStore</p>
         <p>{orderProduct.product.name}</p>
-        {productWithTotalPrice.discountPercentage <= 0 ? (
+        {orderProduct.discountPercentage <= 0 ? (
           <div className="flex justify-between">
             <p className="text-[1.02rem] font-bold">
-              R$ {+productWithTotalPrice.basePrice},00
+              R$ {+orderProduct.basePrice},00
             </p>
             <p>Qtd: {orderProduct.quantity}</p>
           </div>
@@ -44,12 +44,11 @@ const OrderProductItem = ({ orderProduct }: OrderProductItemProps) => {
               <div className="flex items-center gap-2">
                 <p className="text-[1.02rem] font-bold">
                   R$
-                  {+productWithTotalPrice.basePrice -
-                    productWithTotalPrice.totalPrice}
+                  {+orderProduct.basePrice - productTotalPrice}
                   ,00
                 </p>
                 <p className="text-[#676767] line-through">
-                  R$ {+productWithTotalPrice.basePrice},00
+                  R$ {+orderProduct.basePrice},00
                 </p>
               </div>
               <p>Qtd: {orderProduct.quantity}</p>

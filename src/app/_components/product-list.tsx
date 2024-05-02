@@ -28,7 +28,10 @@ export default function ProductList({
       <div className={`${className} md:hidden md:flex-none`}>
         {products.map((product) => (
           <ProductItem
-            product={computeProductTotalPrice(product)}
+            product={{
+              ...product,
+              totalPrice: computeProductTotalPrice(product),
+            }}
             key={product.id}
           />
         ))}
@@ -43,7 +46,10 @@ export default function ProductList({
           {products.map((product, index) => (
             <CarouselItem className={basis} key={index}>
               <ProductItem
-                product={computeProductTotalPrice(product)}
+                product={{
+                  ...product,
+                  totalPrice: computeProductTotalPrice(product),
+                }}
                 key={product.id}
               />
             </CarouselItem>

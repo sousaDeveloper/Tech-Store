@@ -22,7 +22,7 @@ export default function ProductItem({ product }: ProductItemProps) {
     return router.push(`/product/${product.slug}`);
   };
 
-  const productWithDiscount = +product.basePrice - product.totalPrice;
+  const productWithDiscount = product.totalPrice;
 
   const priceFormated = useMemo(
     () =>
