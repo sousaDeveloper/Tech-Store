@@ -10,20 +10,13 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 
 const Sidebar = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
   const path = usePathname();
   const router = useRouter();
 
   const handleRouterClick = (pathName: string) => {
-    setIsLoading(true);
-    router.push(pathName);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
+    return router.push(pathName);
   };
 
   return (
@@ -48,7 +41,6 @@ const Sidebar = () => {
         >
           <PackageIcon size={16} />
           Produtos
-          {isLoading && <Loader className="animate-spin" />}
         </Button>
         <Button
           variant="outline"
