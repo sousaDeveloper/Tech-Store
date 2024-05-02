@@ -7,9 +7,7 @@ import ProductTable, {
   ProductWithTotalPriceAndCategory,
 } from "./components/product-table";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-
-import "./button.css";
+import ButtonAdd from "../components/button-add";
 
 const ProductsPage = async () => {
   const products = await prismaClient.product.findMany({
@@ -37,10 +35,10 @@ const ProductsPage = async () => {
       </Badge>
       <div className="flex items-center justify-between">
         <p className="text-lg">Produtos encontrados: {products.length}</p>
-        <Button className="buttonShadow flex items-center gap-2 transition-all duration-300">
+        <ButtonAdd>
           <PlusIcon size={18} />
           Adicionar produto
-        </Button>
+        </ButtonAdd>
       </div>
       <ProductTable products={productWithTotalPrice} />
     </div>
