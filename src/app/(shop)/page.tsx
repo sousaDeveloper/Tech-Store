@@ -33,14 +33,14 @@ export default async function Home() {
     <>
       <main className="mt-[5.75rem] p-5 md:p-0">
         <BannerHome
-          src="/banner-home-01.png"
+          src="/banner-home-01.webp"
           alt="Até 55% de desconto só esse mês!"
           data-aos="fade-up"
           className="md:hidden md:flex-none"
           sizes="100vw"
         />
         <BannerHome
-          src="/banner-desktop-01.png"
+          src="/banner-desktop-01.webp"
           alt="Até 55% de desconto só esse mês!"
           sizes="100vw"
           data-aos="fade-up"
@@ -68,7 +68,7 @@ export default async function Home() {
       </div>
 
       <BannerHome
-        src="/banner-home-02.png"
+        src="/banner-home-02.webp"
         alt="Até 55% de desconto em Mouses!"
         className="md:hidden md:flex-none"
         sizes="100vw"
@@ -76,12 +76,12 @@ export default async function Home() {
 
       <div className="mt-5 hidden flex-none md:grid md:grid-cols-2 md:place-items-start md:gap-4 md:px-24">
         <BannerHome
-          src="/banner-desktop-04.png"
+          src="/banner-desktop-04.webp"
           alt="Até 55% de desconto em Mouses!"
           sizes="100vw"
         />
         <BannerHome
-          src="/banner-desktop-03.png"
+          src="/banner-desktop-03.webp"
           alt="Até 55% de desconto em Mouses!"
           sizes="100vw"
         />
@@ -104,13 +104,13 @@ export default async function Home() {
       </div>
 
       <BannerHome
-        src="/banner-home-03.png"
+        src="/banner-home-03.webp"
         alt="Até 20% de desconto em Fones!"
         className="md:hidden md:flex-none"
         sizes="100vw"
       />
       <BannerHome
-        src="/banner-desktop-02.png"
+        src="/banner-desktop-02.webp"
         alt="Até 55% de desconto só esse mês!"
         sizes="100vw"
         data-aos="fade-up"
